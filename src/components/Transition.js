@@ -1,79 +1,83 @@
-import { DecryptedText } from '../utils/DecryptedText.js';
+import { LetterGlitch } from '../utils/LetterGlitch.js';
+import { Typewriter } from '../utils/Typewriter.js';
 
 export function renderTransition() {
     return `
-    <div id="transition-page" class="absolute inset-0 flex flex-col items-center justify-center bg-black z-40 overflow-hidden">
-       <!-- Brighter background by reducing opacity of overlay or increasing opacity of image layer -->
-       <div class="absolute inset-0 z-0 bg-[url('/assets/bg-portal.jpg')] bg-cover bg-center brightness-125"></div>
-       <div class="absolute inset-0 bg-black/20 z-0"></div> <!-- reduced from default darkness -->
+    <div id="transition-page" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-40 overflow-hidden w-full h-screen">
+       <!-- LetterGlitch Background -->
+       <div id="letter-glitch-bg" class="absolute inset-0 z-0 w-full h-full"></div>
        
-       <div class="relative z-10 text-center max-w-4xl px-4">
-         <h2 class="text-5xl md:text-7xl font-bold text-white mb-12 text-glow animate-pulse-fast tracking-widest">READY TO ROAR</h2>
+       <!-- Overlay for better contrast -->
+       <div class="absolute inset-0 bg-black/20 z-[1]"></div>
+       
+       <div class="relative z-10 text-center max-w-5xl px-6 w-full">
+         <h2 class="text-5xl md:text-7xl font-bold text-white mb-20 text-glow animate-pulse-fast tracking-widest drop-shadow-[0_0_40px_rgba(255,0,51,0.9)]" style="text-shadow: 0 0 40px rgba(255,0,51,0.9), 0 0 80px rgba(255,0,51,0.5);">READY TO ROAR</h2>
          
-         <div class="font-mono text-xl md:text-3xl text-st-red min-h-[160px] bg-black/60 p-8 rounded-lg border border-st-red/50 box-shadow-glow hover:bg-black/80 transition-all duration-300 backdrop-blur-md flex items-center justify-center">
-            <!-- Decrypted Text Container - Single Block -->
-            <p id="quote-full" class="" data-text="Learning has no boundaries — technical or non-technical. Every skill matters, every idea counts, and every effort builds the future."></p>
+         <!-- Premium Quote Box with Perfect Spacing -->
+         <div id="quote-container" class="relative font-sans text-lg md:text-2xl min-h-[240px] bg-gradient-to-br from-black/85 via-black/75 to-black/85 p-14 md:p-16 rounded-3xl border-2 border-st-red/60 backdrop-blur-2xl flex items-center justify-center overflow-hidden group/quote mx-auto" style="box-shadow: 0 0 80px rgba(255,0,51,0.5), inset 0 0 50px rgba(255,0,51,0.15), 0 20px 60px rgba(0,0,0,0.8); max-width: 950px;">
+            <!-- Animated Border Glow -->
+            <div class="absolute inset-0 rounded-3xl opacity-0 group-hover/quote:opacity-100 transition-opacity duration-700" style="box-shadow: 0 0 100px rgba(255,0,51,0.7), inset 0 0 60px rgba(255,0,51,0.25);"></div>
+            
+            <!-- Rotating Gradient Border -->
+            <div class="absolute inset-0 rounded-3xl opacity-50" style="background: conic-gradient(from 0deg, transparent, rgba(255,0,51,0.5), transparent, rgba(255,0,51,0.5), transparent); animation: rotate-border 8s linear infinite; pointer-events: none; border-radius: 1.5rem;"></div>
+            
+            <!-- Shimmer Effect -->
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover/quote:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover/quote:translate-x-[200%] transition-transform duration-1500 ease-in-out"></div>
+            
+            <!-- Particle Glow Effect -->
+            <div class="absolute inset-0 opacity-0 group-hover/quote:opacity-100 transition-opacity duration-700">
+                <div class="absolute top-1/4 left-1/4 w-40 h-40 bg-st-red/40 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-48 h-48 bg-st-red/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 0.5s;"></div>
+            </div>
+            
+            <!-- Quote Text - Typewriter Effect -->
+            <p id="quote-full" class="relative z-10 text-white leading-relaxed px-8 py-6 text-center" data-text="Learning has no boundaries — technical or non-technical. Every skill matters, every idea counts, and every effort builds the future." style="text-shadow: 0 0 30px rgba(255,0,51,0.7), 0 2px 20px rgba(0,0,0,0.9), 0 4px 10px rgba(0,0,0,0.8); line-height: 2.2; letter-spacing: 2px; word-spacing: 4px; font-family: 'Share Tech Mono', 'Courier New', 'Consolas', monospace; font-size: 1.15rem; font-weight: 400; text-transform: none;"></p>
          </div>
        </div>
 
        <!-- Lightning overlay -->
-       <div id="lightning" class="absolute inset-0 bg-white opacity-0 pointer-events-none mix-blend-overlay"></div>
+       <div id="lightning" class="absolute inset-0 bg-white opacity-0 pointer-events-none mix-blend-overlay z-[2]"></div>
     </div>
   `;
 }
 
 export function initTransition(onComplete) {
-    const quoteContainer = document.getElementById('quote-full');
-    const fullText = "Learning has no boundaries — technical or non-technical. Every skill matters, every idea counts, and every effort builds the future.";
-
-    // Clear and prepare for word-by-word
-    quoteContainer.innerHTML = '';
-    quoteContainer.dataset.text = fullText;
-
-    const words = fullText.split(' ');
-    const spanElements = [];
-
-    // Create spans for each word
-    words.forEach((word) => {
-        const span = document.createElement('span');
-        span.className = 'inline-block mr-2 opacity-0'; // Hidden initially
-        span.innerText = word;
-        span.dataset.text = word;
-        quoteContainer.appendChild(span);
-        spanElements.push(span);
-    });
-
-    // Function to reveal next word
-    let currentIndex = 0;
-
-    function revealNextWord() {
-        if (currentIndex >= spanElements.length) {
-            // All words done, wait then exit
-            setTimeout(() => {
-                triggerCinematicTransition(onComplete);
-            }, 2000);
-            return;
-        }
-
-        const span = spanElements[currentIndex];
-        span.classList.remove('opacity-0'); // Make visible for effect
-
-        // Settings for "one word decrypted text effect"
-        new DecryptedText(span, {
-            speed: 50,
-            maxIterations: 10, // Fast scramble per word
-            animateOn: 'none',
-            revealedClassName: 'text-white font-bold drop-shadow-md'
-        }).startScramble();
-
-        currentIndex++;
-
-        // Delay before next word (visual pacing)
-        setTimeout(revealNextWord, 300); // 300ms gap between words
+    // Initialize LetterGlitch Background
+    const letterGlitchBg = document.getElementById('letter-glitch-bg');
+    if (letterGlitchBg) {
+        new LetterGlitch(letterGlitchBg, {
+            glitchColors: ['#ff0033', '#ff3366', '#ff6699', '#ffffff', '#ffcccc'],
+            glitchSpeed: 40, // Smooth glitch speed
+            centerVignette: true,
+            outerVignette: false,
+            smooth: true,
+            characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
+        });
     }
 
-    // Start sequence
-    setTimeout(revealNextWord, 500);
+    // Initialize Typewriter Effect
+    const quoteElement = document.getElementById('quote-full');
+    const fullText = quoteElement.dataset.text || "Learning has no boundaries — technical or non-technical. Every skill matters, every idea counts, and every effort builds the future.";
+    
+    if (quoteElement) {
+        const typewriter = new Typewriter(quoteElement, {
+            text: fullText,
+            speed: 40, // Fast typing speed
+            showCursor: true,
+            cursorChar: '|',
+            onComplete: () => {
+                // After typing completes, wait then transition
+                setTimeout(() => {
+                    triggerCinematicTransition(onComplete);
+                }, 2000);
+            }
+        });
+    } else {
+        // Fallback if element not found
+        setTimeout(() => {
+            triggerCinematicTransition(onComplete);
+        }, 6000);
+    }
 
     function triggerCinematicTransition(cb) {
         const page = document.getElementById('transition-page');

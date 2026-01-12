@@ -1,7 +1,7 @@
 
 export function renderLoader() {
   return `
-    <div id="loader-page" class="absolute inset-0 flex flex-col items-center justify-center bg-black z-50 overflow-hidden">
+    <div id="loader-page" class="fixed inset-0 flex flex-col items-center justify-center bg-black z-50 overflow-hidden w-full h-screen">
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0 z-0">
         <img src="/assets/bg-forest.jpg" class="w-full h-full object-cover opacity-40 animate-pulse-slow" alt="Upside Down" />
@@ -9,11 +9,11 @@ export function renderLoader() {
       </div>
 
       <!-- Main Title -->
-      <div class="relative z-10 text-center mb-0 mt-8">
-        <h1 class="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-st-red stroke-white text-glow animate-glitch tracking-widest" style="-webkit-text-stroke: 1px #ff0033;">
+      <div class="relative z-10 text-center mb-0 mt-8" style="z-index: 10;">
+        <h1 class="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-st-red stroke-white text-glow animate-glitch tracking-widest" style="-webkit-text-stroke: 1px #ff0033; color: #ff0033; text-shadow: 0 0 20px #ff0033;">
           INTELLINA 2K26
         </h1>
-        <p class="text-st-red mt-2 tracking-[0.5em] text-sm md:text-xl uppercase animate-pulse">Welcome to the Upside Down</p>
+        <p class="text-st-red mt-2 tracking-[0.5em] text-sm md:text-xl uppercase animate-pulse" style="color: #ff0033;">Welcome to the Upside Down</p>
       </div>
 
       <!-- Portal / Pulse Effect -->
@@ -33,9 +33,9 @@ export function renderLoader() {
         <div class="h-4 bg-st-grey border border-st-red rounded-sm overflow-hidden box-glow relative group">
           <div id="progress-bar" class="h-full bg-st-red w-0 transition-all duration-100 ease-out shadow-[0_0_15px_#ff0033]"></div>
         </div>
-        <div class="flex justify-between items-center mt-2 font-mono text-st-red">
-          <span class="text-xs animate-pulse">OPENING_GATE...</span>
-          <span id="progress-text" class="text-lg font-bold">0%</span>
+        <div class="flex justify-between items-center mt-2 font-mono text-st-red" style="color: #ff0033;">
+          <span class="text-xs animate-pulse" style="color: #ff0033;">OPENING_GATE...</span>
+          <span id="progress-text" class="text-lg font-bold" style="color: #ff0033;">0%</span>
         </div>
       </div>
     </div>

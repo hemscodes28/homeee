@@ -53,9 +53,24 @@ export class MagicBento {
 
     resizeCanvas() {
         if (!this.canvas) return;
+        const oldWidth = this.canvas.width;
+        const oldHeight = this.canvas.height;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
-        this.createDots(); // Re-create on resize
+        
+        // Scale existing dots to new canvas size if resizing
+        if (oldWidth > 0 && oldHeight > 0) {
+            const scaleX = this.canvas.width / oldWidth;
+            const scaleY = this.canvas.height / oldHeight;
+            this.dots.forEach(dot => {
+                dot.x *= scaleX;
+                dot.y *= scaleY;
+                dot.originX *= scaleX;
+                dot.originY *= scaleY;
+            });
+        } else {
+            this.createDots(); // Create new dots on first load
+        }
     }
 
     handleResize() {
@@ -65,21 +80,23 @@ export class MagicBento {
     createDots() {
         if (!this.canvas) return;
         this.dots = [];
-        const spacing = 40; // Grid spacing
-        const cols = Math.ceil(this.canvas.width / spacing);
-        const rows = Math.ceil(this.canvas.height / spacing);
-
-        for (let i = 0; i < cols; i++) {
-            for (let j = 0; j < rows; j++) {
-                this.dots.push({
-                    x: i * spacing,
-                    y: j * spacing,
-                    originX: i * spacing,
-                    originY: j * spacing,
-                    size: 1.5,
-                    opacity: 0.2
-                });
-            }
+        // Create dots randomly distributed across canvas for free-flowing effect
+        const dotCount = Math.floor((this.canvas.width * this.canvas.height) / 2000); // Adaptive density
+        
+        for (let i = 0; i < dotCount; i++) {
+            this.dots.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                originX: Math.random() * this.canvas.width,
+                originY: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.2, // Slower random velocity X
+                vy: (Math.random() - 0.5) * 0.2, // Slower random velocity Y
+                size: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.3 + 0.1,
+                angle: Math.random() * Math.PI * 2, // Random starting angle
+                speed: Math.random() * 0.15 + 0.05, // Slower random speed
+                phase: Math.random() * Math.PI * 2 // Phase for wave motion
+            });
         }
     }
 
@@ -87,8 +104,8 @@ export class MagicBento {
         if (!this.ctx) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Update time for flow
-        this.time = (this.time || 0) + 0.01;
+        // Update time for flow (slower)
+        this.time = (this.time || 0) + 0.003;
 
         // Update and draw dots
         const mouseX = this.mouse.x;
@@ -96,33 +113,62 @@ export class MagicBento {
         const radius = 300; // Interaction radius
 
         this.dots.forEach(dot => {
-            // Flow Animation (Air Effect)
-            // Use sin/cos wave info based on position
-            const waveX = Math.sin(dot.originY * 0.01 + this.time) * 10;
-            const waveY = Math.cos(dot.originX * 0.01 + this.time) * 10;
+            // Free-flowing air-like movement - multiple wave patterns combined (slower)
+            const wave1X = Math.sin(dot.phase + this.time * dot.speed * 0.5) * 20;
+            const wave1Y = Math.cos(dot.phase + this.time * dot.speed * 0.35) * 20;
+            
+            const wave2X = Math.sin(dot.originY * 0.003 + this.time * 0.25) * 15;
+            const wave2Y = Math.cos(dot.originX * 0.003 + this.time * 0.25) * 15;
+            
+            const wave3X = Math.sin(dot.angle + this.time * 0.6) * 10;
+            const wave3Y = Math.cos(dot.angle + this.time * 0.6) * 10;
 
-            const currentX = dot.originX + waveX;
-            const currentY = dot.originY + waveY;
+            // Combine waves for organic flow
+            const flowX = wave1X + wave2X + wave3X;
+            const flowY = wave1Y + wave2Y + wave3Y;
 
-            // Distance from mouse (using current wavy position)
+            // Update position with velocity for continuous movement (slower)
+            dot.vx += (Math.sin(this.time + dot.phase) * 0.003);
+            dot.vy += (Math.cos(this.time + dot.phase) * 0.003);
+            
+            // Damping to prevent excessive speed
+            dot.vx *= 0.99;
+            dot.vy *= 0.99;
+
+            // Calculate new position (slower movement)
+            const currentX = dot.originX + flowX + dot.vx * 30;
+            const currentY = dot.originY + flowY + dot.vy * 30;
+
+            // Wrap around edges for continuous flow
+            if (currentX < 0) dot.originX = this.canvas.width;
+            if (currentX > this.canvas.width) dot.originX = 0;
+            if (currentY < 0) dot.originY = this.canvas.height;
+            if (currentY > this.canvas.height) dot.originY = 0;
+
+            // Distance from mouse
             const dx = mouseX - currentX;
             const dy = mouseY - currentY;
             const dist = Math.sqrt(dx * dx + dy * dy);
 
             let scale = 1;
-            let alpha = 0.2;
+            let alpha = dot.opacity;
             let color = '255, 255, 255';
 
             if (dist < radius) {
                 const nav = (1 - dist / radius);
-                scale = 1 + nav * 1.5; // Scale up near mouse
-                alpha = 0.2 + nav * 0.6;
+                scale = 1 + nav * 2; // Scale up near mouse
+                alpha = dot.opacity + nav * 0.7;
                 // Tint red near mouse
                 color = this.options.glowColor;
             }
 
-            // Draw Dot
-            this.ctx.fillStyle = `rgba(${color}, ${alpha})`;
+            // Draw Dot with smooth glow
+            const gradient = this.ctx.createRadialGradient(currentX, currentY, 0, currentX, currentY, dot.size * scale * 2);
+            gradient.addColorStop(0, `rgba(${color}, ${alpha})`);
+            gradient.addColorStop(0.5, `rgba(${color}, ${alpha * 0.5})`);
+            gradient.addColorStop(1, `rgba(${color}, 0)`);
+            
+            this.ctx.fillStyle = gradient;
             this.ctx.beginPath();
             this.ctx.arc(currentX, currentY, dot.size * scale, 0, Math.PI * 2);
             this.ctx.fill();
@@ -205,15 +251,39 @@ export class MagicBento {
 
     // ... Existing Enter/Leave/Move/Particles methods ...
     handleCardEnter(card) {
+        // Premium hover effects with multiple layers
         gsap.to(card, {
-            scale: 1.05,
+            scale: 1.06,
             zIndex: 20,
-            boxShadow: `0 20px 50px rgba(${this.options.glowColor}, 0.3), 0 0 20px rgba(${this.options.glowColor}, 0.1) inset`,
-            borderColor: `rgba(${this.options.glowColor}, 0.8)`,
-            duration: 0.4,
-            ease: 'back.out(1.7)'
+            boxShadow: `0 30px 80px rgba(${this.options.glowColor}, 0.5), 
+                        0 0 40px rgba(${this.options.glowColor}, 0.3) inset,
+                        0 0 100px rgba(${this.options.glowColor}, 0.2)`,
+            borderColor: `rgba(${this.options.glowColor}, 1)`,
+            duration: 0.6,
+            ease: 'power3.out'
         });
-        if (this.options.enableParticles) this.createParticles(card);
+
+        // Add premium glow animation
+        const glow = document.createElement('div');
+        glow.className = 'premium-glow absolute inset-0 rounded-2xl pointer-events-none';
+        glow.style.background = `radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+            rgba(${this.options.glowColor}, 0.4) 0%, 
+            rgba(${this.options.glowColor}, 0.1) 40%, 
+            transparent 70%)`;
+        glow.style.opacity = '0';
+        glow.style.transition = 'opacity 0.6s ease';
+        card.appendChild(glow);
+        
+        setTimeout(() => {
+            glow.style.opacity = '1';
+        }, 10);
+
+        // Enhanced particle burst
+        if (this.options.enableParticles) {
+            this.createParticles(card);
+            // Additional particle burst after delay
+            setTimeout(() => this.createParticles(card), 200);
+        }
     }
 
     handleCardLeave(card) {
@@ -224,9 +294,17 @@ export class MagicBento {
             borderColor: 'rgba(255,255,255,0.1)',
             rotationX: 0,
             rotationY: 0,
-            duration: 0.5,
+            duration: 0.7,
             ease: 'power2.out'
         });
+        
+        // Remove premium glow
+        const glow = card.querySelector('.premium-glow');
+        if (glow) {
+            glow.style.opacity = '0';
+            setTimeout(() => glow.remove(), 700);
+        }
+        
         const particles = card.querySelectorAll('.particle');
         particles.forEach(p => p.remove());
     }
@@ -252,32 +330,53 @@ export class MagicBento {
     }
 
     createParticles(card) {
-        // ... existing logic ...
-        for (let i = 0; i < 8; i++) {
+        // Premium particle burst - more particles with varied effects
+        const particleCount = 12;
+        for (let i = 0; i < particleCount; i++) {
             const p = document.createElement('div');
-            p.className = 'particle absolute rounded-full pointer-events-none bg-white box-shadow-glow';
-            p.style.width = Math.random() * 4 + 2 + 'px';
-            p.style.height = p.style.width;
+            p.className = 'particle absolute rounded-full pointer-events-none';
+            const size = Math.random() * 5 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
             p.style.backgroundColor = `rgb(${this.options.glowColor})`;
+            p.style.boxShadow = `0 0 ${size * 3}px rgb(${this.options.glowColor})`;
 
             const rect = card.getBoundingClientRect();
-            p.style.left = Math.random() * rect.width + 'px';
-            p.style.top = Math.random() * rect.height + 'px';
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Particles spawn from center or random position
+            const spawnX = Math.random() > 0.5 ? centerX + (Math.random() - 0.5) * rect.width * 0.3 : Math.random() * rect.width;
+            const spawnY = Math.random() > 0.5 ? centerY + (Math.random() - 0.5) * rect.height * 0.3 : Math.random() * rect.height;
+            
+            p.style.left = spawnX + 'px';
+            p.style.top = spawnY + 'px';
 
             card.appendChild(p);
 
+            // Enhanced animation with rotation and scale
+            const angle = (Math.PI * 2 * i) / particleCount;
+            const distance = 80 + Math.random() * 60;
+            const targetX = Math.cos(angle) * distance;
+            const targetY = Math.sin(angle) * distance;
+
             gsap.fromTo(p,
-                { scale: 0, opacity: 0 },
+                { scale: 0, opacity: 0, rotation: 0 },
                 {
-                    scale: 1,
-                    opacity: 0.8,
-                    duration: 0.3,
+                    scale: 1.5,
+                    opacity: 1,
+                    rotation: 360,
+                    duration: 0.4,
+                    ease: 'back.out(2)',
                     onComplete: () => {
                         gsap.to(p, {
-                            y: -100 - Math.random() * 50,
-                            x: (Math.random() - 0.5) * 50,
+                            x: targetX,
+                            y: targetY,
+                            scale: 0,
                             opacity: 0,
-                            duration: 1 + Math.random(),
+                            rotation: 720,
+                            duration: 1.2 + Math.random() * 0.5,
+                            ease: 'power2.out',
                             onComplete: () => p.remove()
                         });
                     }
