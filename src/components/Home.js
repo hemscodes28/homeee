@@ -1,5 +1,7 @@
 import { MagicBento } from '../utils/MagicBento.js';
 import { TornPaperEffect } from '../utils/TornPaperEffect.js';
+import { initParticles } from '../utils/Particle.js';
+import { ElectricBorder } from '../utils/ElectricBorder.js';
 
 export function renderHome() {
     return `
@@ -47,14 +49,6 @@ export function renderHome() {
              <!-- Glitch Border Effect - Multiple Layers -->
              <div class="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-st-red to-transparent opacity-80 group-hover/nav:opacity-100 group-hover/nav:h-[3px] transition-all duration-500" style="box-shadow: 0 0 10px rgba(255,0,51,0.8);"></div>
              <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-st-red/50 to-transparent opacity-50 group-hover/nav:opacity-100 transition-all duration-500"></div>
-             
-             <!-- Floating Particles Effect -->
-             <div class="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
-                <div class="nav-particle absolute w-1 h-1 bg-st-red rounded-full opacity-0 group-hover/nav:opacity-100" style="top: 20%; left: 10%; animation: float-particle 3s ease-in-out infinite;"></div>
-                <div class="nav-particle absolute w-1 h-1 bg-st-red rounded-full opacity-0 group-hover/nav:opacity-100" style="top: 60%; left: 30%; animation: float-particle 4s ease-in-out infinite 0.5s;"></div>
-                <div class="nav-particle absolute w-1 h-1 bg-st-red rounded-full opacity-0 group-hover/nav:opacity-100" style="top: 40%; right: 20%; animation: float-particle 3.5s ease-in-out infinite 1s;"></div>
-                <div class="nav-particle absolute w-1 h-1 bg-st-red rounded-full opacity-0 group-hover/nav:opacity-100" style="top: 80%; right: 40%; animation: float-particle 4.5s ease-in-out infinite 1.5s;"></div>
-             </div>
              
              <!-- Noise Texture Overlay -->
              <div class="absolute inset-0 bg-[url('/assets/noise.png')] opacity-5 mix-blend-overlay rounded-full"></div>
@@ -138,65 +132,41 @@ export function renderHome() {
                 <!-- Info Grid (Static/Interactive cards, NOT Bento bg) -->
                 <div id="foreground-bento-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 perspective-1000">
                      <!-- Date -->
-                     <div class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group hover:border-st-red transition-all duration-700 ease-out hover:shadow-[0_0_60px_rgba(255,0,51,0.4),0_0_120px_rgba(255,0,51,0.2)] hover:-translate-y-3 hover:scale-[1.03] overflow-hidden cursor-pointer">
-                        <!-- Animated gradient overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-st-red/20 via-st-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                        <!-- Shimmer effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-                        <!-- Radial pulse effect -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 group-hover:w-full group-hover:h-full rounded-full transition-all duration-1000" style="background: radial-gradient(circle, rgba(255,0,51,0.2) 0%, transparent 70%);"></div>
-                        </div>
-                        <!-- Glow border effect -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="box-shadow: inset 0 0 30px rgba(255,0,51,0.3);"></div>
-                        <!-- Corner accent glow -->
-                        <div class="absolute top-0 left-0 w-20 h-20 bg-st-red/20 rounded-br-full opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700"></div>
-                        <div class="absolute bottom-0 right-0 w-20 h-20 bg-st-red/20 rounded-tl-full opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700"></div>
+                     <div id="date-card" class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[1.02]">
+                        <!-- Electric border will be injected here on hover -->
+                        
+                        <!-- Subtle shimmer effect -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out rounded-2xl"></div>
+                        
                         <div class="relative z-10">
-                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(255,0,51,0.8)] transform group-hover:scale-105 group-hover:translate-x-1">MARCH 6 & 7</h3>
+                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_12px_rgba(180,0,30,0.6)] transform group-hover:scale-105 group-hover:translate-x-1">MARCH 6 & 7</h3>
                             <p class="text-gray-400 text-sm tracking-widest uppercase group-hover:text-gray-200 transition-colors duration-500 group-hover:translate-x-1">2026</p>
                         </div>
                      </div>
                      <!-- Location -->
-                     <div class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group hover:border-st-red transition-all duration-700 ease-out hover:shadow-[0_0_60px_rgba(255,0,51,0.4),0_0_120px_rgba(255,0,51,0.2)] hover:-translate-y-3 hover:scale-[1.03] overflow-hidden cursor-pointer">
-                        <!-- Animated gradient overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-st-red/20 via-st-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                        <!-- Shimmer effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-                        <!-- Radial pulse effect -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden">
-                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 group-hover:w-full group-hover:h-full rounded-full transition-all duration-1000" style="background: radial-gradient(circle, rgba(255,0,51,0.2) 0%, transparent 70%);"></div>
-                        </div>
-                        <!-- Glow border effect -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="box-shadow: inset 0 0 30px rgba(255,0,51,0.3);"></div>
-                        <!-- Corner accent glow -->
-                        <div class="absolute top-0 left-0 w-20 h-20 bg-st-red/20 rounded-br-full opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700"></div>
-                        <div class="absolute bottom-0 right-0 w-20 h-20 bg-st-red/20 rounded-tl-full opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700"></div>
+                     <div id="location-card" class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[1.02]">
+                        <!-- Electric border will be injected here on hover -->
+                        
+                        <!-- Subtle shimmer effect -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out rounded-2xl"></div>
+                        
                         <div class="relative z-10">
-                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_15px_rgba(255,0,51,0.8)] transform group-hover:scale-105 group-hover:translate-x-1">C.I.T.</h3>
+                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_12px_rgba(180,0,30,0.6)] transform group-hover:scale-105 group-hover:translate-x-1">C.I.T.</h3>
                             <p class="text-gray-400 text-sm tracking-widest uppercase group-hover:text-gray-200 transition-colors duration-500 group-hover:translate-x-1">Coimbatore</p>
                         </div>
                      </div>
                      <!-- Register -->
-                     <div class="magic-bento-card col-span-1 md:col-span-2 relative bg-gradient-to-r from-st-red/10 to-transparent border border-st-red/30 p-8 rounded-2xl group hover:border-st-red transition-all duration-700 ease-out hover:shadow-[0_0_80px_rgba(255,0,51,0.6),0_0_150px_rgba(255,0,51,0.3)] hover:scale-[1.04] cursor-pointer overflow-hidden">
-                        <!-- Animated background glow -->
-                        <div class="absolute inset-0 bg-st-red/30 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                        <!-- Pulsing glow effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-st-red/40 via-st-red/20 to-st-red/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse-fast"></div>
-                        <!-- Shimmer sweep -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1200 ease-in-out"></div>
-                        <!-- Radial wave effect -->
-                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 group-hover:w-[200%] group-hover:h-[200%] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-1000" style="background: radial-gradient(circle, rgba(255,0,51,0.3) 0%, transparent 70%);"></div>
-                        <!-- Inner glow border -->
-                        <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" style="box-shadow: inset 0 0 40px rgba(255,0,51,0.5), 0 0 60px rgba(255,0,51,0.4);"></div>
-                        <!-- Animated border -->
-                        <div class="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-st-red/50 transition-all duration-700"></div>
+                     <div id="register-card" class="magic-bento-card col-span-1 md:col-span-2 relative bg-gradient-to-r from-st-red/10 to-transparent border border-st-red/30 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:scale-[1.02]">
+                        <!-- Electric border will be injected here on hover -->
+                        
+                        <!-- Shimmer sweep (subtle) -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1200 ease-in-out rounded-2xl"></div>
                         <div class="relative z-10 flex justify-between items-center px-2">
                             <div>
-                                <h3 class="text-3xl font-extrabold text-white group-hover:text-st-red transition-all duration-500 drop-shadow-md group-hover:drop-shadow-[0_0_20px_rgba(255,0,51,1)] transform group-hover:scale-105 group-hover:translate-x-2">REGISTER NOW</h3>
-                                <p class="text-gray-300 text-sm mt-2 tracking-wider group-hover:text-white transition-all duration-500 group-hover:drop-shadow-[0_0_10px_rgba(255,0,51,0.5)] group-hover:translate-x-2">Limited Seats Available • <span class="text-st-red group-hover:text-white transition-colors duration-500">Join the Upside Down</span></p>
+                                <h3 class="text-3xl font-extrabold text-white group-hover:text-st-red transition-all duration-500 drop-shadow-md group-hover:drop-shadow-[0_0_20px_rgba(180,0,30,0.8)] transform group-hover:scale-105 group-hover:translate-x-2">REGISTER NOW</h3>
+                                <p class="text-gray-300 text-sm mt-2 tracking-wider group-hover:text-white transition-all duration-500 group-hover:drop-shadow-[0_0_10px_rgba(180,0,30,0.4)] group-hover:translate-x-2">Limited Seats Available • <span class="text-st-red group-hover:text-white transition-colors duration-500">Join the Upside Down</span></p>
                             </div>
-                            <div class="w-12 h-12 rounded-full border-2 border-st-red/50 flex items-center justify-center group-hover:bg-st-red group-hover:text-black group-hover:border-st-red group-hover:shadow-[0_0_20px_rgba(255,0,51,0.8)] transition-all duration-500 transform group-hover:rotate-90 group-hover:scale-110 group-hover:-translate-x-2">
+                            <div class="w-12 h-12 rounded-full border-2 border-st-red/50 flex items-center justify-center group-hover:bg-st-red group-hover:text-black group-hover:border-st-red group-hover:shadow-[0_0_20px_rgba(180,0,30,0.6)] transition-all duration-500 transform group-hover:rotate-90 group-hover:scale-110 group-hover:-translate-x-2">
                                 <span class="text-2xl transform group-hover:scale-125 transition-transform duration-500">↗</span>
                             </div>
                         </div>
@@ -248,49 +218,49 @@ export function renderHome() {
                         <!-- Innovative Countdown Grid -->
                         <div class="grid grid-cols-2 gap-5 relative z-10">
                             <!-- Days -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 30px rgba(255,0,51,0.2), inset 0 0 20px rgba(255,0,51,0.05);">
+                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
                                 <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="relative z-10">
-                                    <span id="days" class="block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,0,51,0.5);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">DAYS</span>
+                                    <span id="days" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
+                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">SIGNAL SYNC</span>
                                 </div>
                             </div>
                             
                             <!-- Hours -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 30px rgba(255,0,51,0.2), inset 0 0 20px rgba(255,0,51,0.05);">
+                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
                                 <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="relative z-10">
-                                    <span id="hours" class="block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,0,51,0.5);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">HOURS</span>
+                                    <span id="hours" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
+                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">INTERFERENCE LEVEL</span>
                                 </div>
                             </div>
                             
                             <!-- Minutes -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 30px rgba(255,0,51,0.2), inset 0 0 20px rgba(255,0,51,0.05);">
+                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
                                 <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
                                 <div class="relative z-10">
-                                    <span id="minutes" class="block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 40px rgba(255,0,51,0.5);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">MINUTES</span>
+                                    <span id="minutes" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
+                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">SIGNAL SYNC</span>
                                 </div>
                             </div>
                             
                             <!-- Seconds - Special Highlight -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-st-red/20 via-st-red/10 to-st-red/20 rounded-xl border-2 border-st-red/60 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 50px rgba(255,0,51,0.6), inset 0 0 30px rgba(255,0,51,0.2);">
+                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-st-red/20 via-st-red/10 to-st-red/20 rounded-xl border-2 border-st-red/60 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 35px rgba(180,0,30,0.4), inset 0 0 20px rgba(180,0,30,0.15);">
                                 <div class="absolute inset-0 bg-gradient-to-br from-st-red/30 via-st-red/20 to-st-red/30 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 animate-pulse-fast"></div>
                                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-100"></div>
                                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/item:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover/item:translate-x-[200%] transition-transform duration-1000"></div>
                                 <div class="relative z-10">
-                                    <span id="seconds" class="block text-6xl font-mono font-black text-st-red tracking-tighter mb-2 group-hover/item:scale-110 transition-transform duration-500" style="text-shadow: 0 0 30px rgba(255,0,51,0.8), 0 0 60px rgba(255,0,51,0.5);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-st-red font-bold" style="text-shadow: 0 0 10px rgba(255,0,51,0.6);">SECONDS</span>
+                                    <span id="seconds" class="terminal-number block text-6xl font-mono font-black text-st-red tracking-tighter mb-2 group-hover/item:scale-110 transition-transform duration-500" style="text-shadow: 0 0 20px rgba(180,0,30,0.6), 0 0 40px rgba(180,0,30,0.35);">00</span>
+                                    <span class="text-[11px] uppercase tracking-[0.3em] text-st-red font-bold" style="text-shadow: 0 0 8px rgba(180,0,30,0.4);">INTERFERENCE LEVEL</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>>
         </div>
       </div>
     </div>
@@ -298,7 +268,13 @@ export function renderHome() {
 }
 
 export function initHome() {
-    // 0. Initialize Torn Paper Effect on BACKGROUND
+    // 0. Initialize Particles Background
+    const homePage = document.getElementById('home-page');
+    if (homePage) {
+        initParticles(homePage);
+    }
+
+    // 1. Initialize Torn Paper Effect on BACKGROUND
     const tornPaperContainer = document.getElementById('torn-paper-background');
     if (tornPaperContainer) {
         new TornPaperEffect(tornPaperContainer, {
@@ -309,20 +285,20 @@ export function initHome() {
         });
     }
 
-    // 1. Initialize Magic Bento Effect on BACKGROUND
-    const bgContainer = document.getElementById('magic-bento-background');
-    if (bgContainer) {
-        new MagicBento(bgContainer, {
-            spotlightRadius: 600,
-            glowColor: '255, 0, 51',
-            enableParticles: false,
-            idleAnimation: true,
-            backgroundMode: true, // Auto revolve
-            enableDotGrid: true
-        });
-    }
+    // 2. Initialize Magic Bento Effect on BACKGROUND
+    // const bgContainer = document.getElementById('magic-bento-background');
+    // if (bgContainer) {
+    //     new MagicBento(bgContainer, {
+    //         spotlightRadius: 600,
+    //         glowColor: '255, 0, 51',
+    //         enableParticles: false,
+    //         idleAnimation: true,
+    //         backgroundMode: true, // Auto revolve
+    //         enableDotGrid: true
+    //     });
+    // }
 
-    // 2. Initialize Magic Bento Effect on FOREGROUND CARDS (Premium Hover - NO PARTICLES)
+    // 3. Initialize Magic Bento Effect on FOREGROUND CARDS (Premium Hover - NO PARTICLES)
     const fgContainer = document.getElementById('foreground-bento-grid');
     if (fgContainer) {
         new MagicBento(fgContainer, {
@@ -335,8 +311,144 @@ export function initHome() {
         });
     }
 
+    // 4. Initialize Electric Border on Register Card (Hover-activated)
+    const registerCard = document.getElementById('register-card');
+    if (registerCard) {
+        let electricBorder = null;
+        let isHovering = false;
+
+        registerCard.addEventListener('mouseenter', () => {
+            isHovering = true;
+            // Delay to create smooth transition
+            setTimeout(() => {
+                if (isHovering && !electricBorder) {
+                    electricBorder = new ElectricBorder(registerCard, {
+                        color: '#ff0033',
+                        speed: 1,
+                        chaos: 0.12,
+                        borderRadius: 16,
+                        borderOffset: 40,
+                        displacement: 50
+                    });
+                }
+            }, 100);
+        });
+
+        registerCard.addEventListener('mouseleave', () => {
+            isHovering = false;
+            // Delay destruction for smooth exit
+            setTimeout(() => {
+                if (!isHovering && electricBorder) {
+                    electricBorder.destroy();
+                    electricBorder = null;
+                }
+            }, 300);
+        });
+    }
+
+    // 5. Initialize Electric Border on Date Card (Hover-activated)
+    const dateCard = document.getElementById('date-card');
+    if (dateCard) {
+        let electricBorder = null;
+        let isHovering = false;
+
+        dateCard.addEventListener('mouseenter', () => {
+            isHovering = true;
+            setTimeout(() => {
+                if (isHovering && !electricBorder) {
+                    electricBorder = new ElectricBorder(dateCard, {
+                        color: '#ff0033',
+                        speed: 1,
+                        chaos: 0.12,
+                        borderRadius: 16,
+                        borderOffset: 40,
+                        displacement: 50
+                    });
+                }
+            }, 100);
+        });
+
+        dateCard.addEventListener('mouseleave', () => {
+            isHovering = false;
+            setTimeout(() => {
+                if (!isHovering && electricBorder) {
+                    electricBorder.destroy();
+                    electricBorder = null;
+                }
+            }, 300);
+        });
+    }
+
+    // 6. Initialize Electric Border on Location Card (Hover-activated)
+    const locationCard = document.getElementById('location-card');
+    if (locationCard) {
+        let electricBorder = null;
+        let isHovering = false;
+
+        locationCard.addEventListener('mouseenter', () => {
+            isHovering = true;
+            setTimeout(() => {
+                if (isHovering && !electricBorder) {
+                    electricBorder = new ElectricBorder(locationCard, {
+                        color: '#ff0033',
+                        speed: 1,
+                        chaos: 0.12,
+                        borderRadius: 16,
+                        borderOffset: 40,
+                        displacement: 50
+                    });
+                }
+            }, 100);
+        });
+
+        locationCard.addEventListener('mouseleave', () => {
+            isHovering = false;
+            setTimeout(() => {
+                if (!isHovering && electricBorder) {
+                    electricBorder.destroy();
+                    electricBorder = null;
+                }
+            }, 300);
+        });
+    }
+
+
     // Countdown Logic -> Date: March 6, 2026
     const targetDate = new Date('March 6, 2026 09:00:00').getTime();
+
+    // Lab Terminal Glitch Effects
+    let previousValues = { days: null, hours: null, minutes: null, seconds: null };
+
+    // Function to trigger glitch effect on a number element
+    function triggerGlitch(element) {
+        if (!element) return;
+        element.classList.add('glitch');
+        setTimeout(() => element.classList.remove('glitch'), 300);
+    }
+
+    // Function to create random static line
+    function createStaticLine(parentElement) {
+        if (!parentElement) return;
+        const staticLine = document.createElement('div');
+        staticLine.className = 'static-line';
+        staticLine.style.top = `${Math.random() * 100}%`;
+        parentElement.appendChild(staticLine);
+        setTimeout(() => staticLine.remove(), 200);
+    }
+
+    // Random static line appearance (every 3-8 seconds)
+    function scheduleRandomStatic() {
+        const countdownCards = document.querySelectorAll('.countdown-card');
+        if (countdownCards.length > 0) {
+            const randomCard = countdownCards[Math.floor(Math.random() * countdownCards.length)];
+            createStaticLine(randomCard);
+        }
+        const nextDelay = 3000 + Math.random() * 5000; // 3-8 seconds
+        setTimeout(scheduleRandomStatic, nextDelay);
+    }
+
+    // Start random static effects
+    setTimeout(scheduleRandomStatic, 2000);
 
     const interval = setInterval(() => {
         const now = new Date().getTime();
@@ -353,11 +465,41 @@ export function initHome() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        if (document.getElementById('days')) {
-            document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        if (daysEl) {
+            const newValues = {
+                days: days.toString().padStart(2, '0'),
+                hours: hours.toString().padStart(2, '0'),
+                minutes: minutes.toString().padStart(2, '0'),
+                seconds: seconds.toString().padStart(2, '0')
+            };
+
+            // Update values and trigger glitch on change
+            if (previousValues.days !== newValues.days) {
+                daysEl.innerText = newValues.days;
+                triggerGlitch(daysEl);
+            }
+            if (previousValues.hours !== newValues.hours) {
+                hoursEl.innerText = newValues.hours;
+                triggerGlitch(hoursEl);
+            }
+            if (previousValues.minutes !== newValues.minutes) {
+                minutesEl.innerText = newValues.minutes;
+                triggerGlitch(minutesEl);
+            }
+            if (previousValues.seconds !== newValues.seconds) {
+                secondsEl.innerText = newValues.seconds;
+                // Subtle glitch on seconds (20% chance to make it less aggressive)
+                if (Math.random() > 0.8) {
+                    triggerGlitch(secondsEl);
+                }
+            }
+
+            previousValues = newValues;
         } else {
             clearInterval(interval);
         }
