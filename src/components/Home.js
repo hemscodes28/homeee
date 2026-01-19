@@ -155,21 +155,9 @@ export function renderHome() {
                             <p class="text-gray-400 text-sm tracking-widest uppercase group-hover:text-gray-200 transition-colors duration-500 group-hover:translate-x-1">Coimbatore</p>
                         </div>
                      </div>
-                     <!-- Register -->
-                     <div id="register-card" class="magic-bento-card col-span-1 md:col-span-2 relative bg-gradient-to-r from-st-red/10 to-transparent border border-st-red/30 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:scale-[1.02]">
-                        <!-- Electric border will be injected here on hover -->
-                        
-                        <!-- Shimmer sweep (subtle) -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1200 ease-in-out rounded-2xl"></div>
-                        <div class="relative z-10 flex justify-between items-center px-2">
-                            <div>
-                                <h3 class="text-3xl font-extrabold text-white group-hover:text-st-red transition-all duration-500 drop-shadow-md group-hover:drop-shadow-[0_0_20px_rgba(180,0,30,0.8)] transform group-hover:scale-105 group-hover:translate-x-2">REGISTER NOW</h3>
-                                <p class="text-gray-300 text-sm mt-2 tracking-wider group-hover:text-white transition-all duration-500 group-hover:drop-shadow-[0_0_10px_rgba(180,0,30,0.4)] group-hover:translate-x-2">Limited Seats Available • <span class="text-st-red group-hover:text-white transition-colors duration-500">Join the Upside Down</span></p>
-                            </div>
-                            <div class="w-12 h-12 rounded-full border-2 border-st-red/50 flex items-center justify-center group-hover:bg-st-red group-hover:text-black group-hover:border-st-red group-hover:shadow-[0_0_20px_rgba(180,0,30,0.6)] transition-all duration-500 transform group-hover:rotate-90 group-hover:scale-110 group-hover:-translate-x-2">
-                                <span class="text-2xl transform group-hover:scale-125 transition-transform duration-500">↗</span>
-                            </div>
-                        </div>
+                     <!-- Countdown Timer Widget -->
+                     <div class="st-countdown-container col-span-1 md:col-span-2 relative p-8 rounded-2xl flex flex-col items-center justify-center min-h-[160px]">
+                        <a href="https://logwork.com/countdown-ac35" class="countdown-timer" data-style="circles" data-timezone="Asia/Kolkata" data-textcolor="#9a1c24" data-date="2026-03-06 13:31" data-background="#c1121f" data-digitscolor="#f0d8d8" data-unitscolor="#9a1c24">Countdown Timer</a>
                      </div>
                 </div>
 
@@ -235,6 +223,16 @@ export function initHome() {
         });
     }
 
+    // 2. Add Re-initialization Logic for Logwork Countdown
+    // Standard widget behavior: re-inject script to trigger scan for widgets in DOM
+    const existingScript = document.querySelector('script[src*="logwork.com/widget/countdown.js"]');
+    if (existingScript) existingScript.remove();
+
+    const newScript = document.createElement('script');
+    newScript.src = 'https://cdn.logwork.com/widget/countdown.js';
+    newScript.async = true;
+    document.head.appendChild(newScript);
+
     // 2. Initialize Magic Bento Effect on BACKGROUND
     // const bgContainer = document.getElementById('magic-bento-background');
     // if (bgContainer) {
@@ -248,53 +246,7 @@ export function initHome() {
     //     });
     // }
 
-    // 3. Initialize Magic Bento Effect on FOREGROUND CARDS (Premium Hover - NO PARTICLES)
-    const fgContainer = document.getElementById('foreground-bento-grid');
-    if (fgContainer) {
-        new MagicBento(fgContainer, {
-            spotlightRadius: 300, // Focused spotlight
-            glowColor: '255, 0, 51',
-            enableParticles: false, // NO bubble/particle effect
-            idleAnimation: false, // Static until hover
-            backgroundMode: false, // Enable full interactive hover physics
-            enableDotGrid: false
-        });
-    }
 
-    // 4. Initialize Electric Border on Register Card (Hover-activated)
-    const registerCard = document.getElementById('register-card');
-    if (registerCard) {
-        let electricBorder = null;
-        let isHovering = false;
-
-        registerCard.addEventListener('mouseenter', () => {
-            isHovering = true;
-            // Delay to create smooth transition
-            setTimeout(() => {
-                if (isHovering && !electricBorder) {
-                    electricBorder = new ElectricBorder(registerCard, {
-                        color: '#ff0033',
-                        speed: 1,
-                        chaos: 0.12,
-                        borderRadius: 16,
-                        borderOffset: 40,
-                        displacement: 50
-                    });
-                }
-            }, 100);
-        });
-
-        registerCard.addEventListener('mouseleave', () => {
-            isHovering = false;
-            // Delay destruction for smooth exit
-            setTimeout(() => {
-                if (!isHovering && electricBorder) {
-                    electricBorder.destroy();
-                    electricBorder = null;
-                }
-            }, 300);
-        });
-    }
 
     // 5. Initialize Electric Border on Date Card (Hover-activated)
     const dateCard = document.getElementById('date-card');
