@@ -22,6 +22,12 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* Cinematic Grain Overlay */
@@ -432,6 +438,7 @@ canvas {
   justify-content: center;
 }
 
+
 .st-robot-container:hover {
   border-color: rgba(255, 0, 51, 0.8);
   box-shadow: 0 0 70px rgba(255, 0, 51, 0.4), inset 0 0 50px rgba(255, 0, 51, 0.2);
@@ -478,6 +485,29 @@ canvas {
   opacity: 0.1;
   pointer-events: none;
   z-index: 10;
+}
+
+/* Fuzzy Text Styling */
+#fuzzy-title {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+#fuzzy-subtitle {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+
+#fuzzy-title canvas,
+#fuzzy-subtitle canvas {
+  display: block;
+  max-width: 100%;
+  pointer-events: auto;
 }
 
 /* Static line effect */

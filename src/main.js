@@ -42,7 +42,7 @@ function switchState(newState) {
 
 function render() {
   if (!app) return;
-  
+
   app.innerHTML = ''; // Clear current content
 
   try {
@@ -55,6 +55,10 @@ function render() {
       initTransition(() => switchState(STATE.HOME));
     }
     else if (currentState === STATE.HOME) {
+      document.body.style.overflowY = 'auto';
+      document.body.style.overflowX = 'hidden';
+      document.body.style.height = 'auto';
+      if (app) app.style.height = 'auto';
       app.innerHTML = renderHome();
       initHome();
     }

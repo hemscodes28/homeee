@@ -2,10 +2,11 @@ import { MagicBento } from '../utils/MagicBento.js';
 import { TornPaperEffect } from '../utils/TornPaperEffect.js';
 import { initParticles } from '../utils/Particle.js';
 import { ElectricBorder } from '../utils/ElectricBorder.js';
+import { FuzzyText } from '../utils/FuzzyText.js';
 
 export function renderHome() {
     return `
-    <div id="home-page" class="relative min-h-screen w-full bg-black overflow-hidden scroll-smooth" style="min-height: 100vh; width: 100%;">
+    <div id="home-page" class="relative min-h-screen w-full bg-black scroll-smooth" style="min-height: 100vh; width: 100%;">
       
       <!-- BACKGROUND: Torn Paper Effect Container -->
       <div id="torn-paper-background" class="fixed inset-0 z-0 opacity-60 pointer-events-none"></div>
@@ -116,12 +117,9 @@ export function renderHome() {
             <!-- Left Column: Title & Info -->
             <div class="w-full lg:w-1/2 space-y-10 animate-slide-up opacity-0 pointer-events-auto" style="animation-fill-mode: forwards; animation-delay: 0.2s;">
                 <div class="relative overflow-visible" style="min-width: 100%;">
-                    <h1 class="text-7xl md:text-9xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 tracking-tighter filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] whitespace-nowrap overflow-visible" style="padding-right: 120px; display: inline-block; width: auto;">
-                        INTELLINA
-                    </h1>
-                    <h2 class="text-5xl md:text-7xl font-mono text-st-red absolute -bottom-4 right-0 md:right-12 mix-blend-screen animate-pulse-fast transform -rotate-2 whitespace-nowrap" style="pointer-events: none;">
-                        2K26
-                    </h2>
+                    <!-- Fuzzy Text Containers -->
+                    <div id="fuzzy-title" class="relative z-10"></div>
+                    <div id="fuzzy-subtitle" class="absolute -bottom-4 right-0 md:right-12 mix-blend-screen z-20 pointer-events-none"></div>
                 </div>
                 
                 <p class="text-gray-300 text-lg md:text-xl max-w-xl leading-relaxed border-l-4 border-st-red pl-6">
@@ -210,6 +208,36 @@ export function initHome() {
     const homePage = document.getElementById('home-page');
     if (homePage) {
         initParticles(homePage);
+    }
+
+    // 1. Initialize Fuzzy Text Effect
+    const fuzzyTitleContainer = document.getElementById('fuzzy-title');
+    if (fuzzyTitleContainer) {
+        new FuzzyText(fuzzyTitleContainer, {
+            text: 'INTELLINA',
+            fontSize: 'clamp(4rem, 12vw, 10rem)',
+            fontWeight: 900,
+            color: '#fff',
+            glitchMode: true,
+            fuzzRange: 15,
+            baseIntensity: 0.1,
+            hoverIntensity: 0.4
+        });
+    }
+
+    const fuzzySubtitleContainer = document.getElementById('fuzzy-subtitle');
+    if (fuzzySubtitleContainer) {
+        new FuzzyText(fuzzySubtitleContainer, {
+            text: '2K26',
+            fontSize: 'clamp(2rem, 6vw, 5rem)',
+            fontWeight: 700,
+            color: '#ff0033',
+            glitchMode: true,
+            fuzzRange: 20,
+            baseIntensity: 0.2,
+            hoverIntensity: 0.6,
+            className: 'transform -rotate-2 font-mono'
+        });
     }
 
     // 1. Initialize Torn Paper Effect on BACKGROUND
