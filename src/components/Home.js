@@ -188,74 +188,24 @@ export function renderHome() {
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] border border-dashed border-st-red/25 rounded-full animate-spin-reverse pointer-events-none"></div>
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border border-st-red/20 rounded-full animate-spin-slow pointer-events-none" style="animation-duration: 20s;"></div>
 
-                    <!-- Main Countdown Container -->
-                    <div class="bg-gradient-to-br from-black/90 via-black/85 to-black/90 backdrop-blur-xl border-2 border-st-red/60 p-8 rounded-3xl shadow-[0_0_80px_rgba(255,0,51,0.5),inset_0_0_60px_rgba(255,0,51,0.1)] relative overflow-hidden group/countdown">
-                        <!-- Animated Grid Background -->
-                        <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(255,0,51,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,51,0.1) 1px, transparent 1px); background-size: 20px 20px; animation: grid-move 20s linear infinite;"></div>
-                        
+                    <!-- Main Robot Container -->
+                    <div class="st-robot-container group/robot relative">
                         <!-- Holographic Scan Line -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-st-red/10 to-transparent opacity-0 group-hover/countdown:opacity-100 transition-opacity duration-500" style="animation: scan-line 3s linear infinite;"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-st-red/15 to-transparent opacity-0 group-hover/robot:opacity-100 transition-opacity duration-500 pointer-events-none" style="animation: scan-line 3s linear infinite; z-index: 50;"></div>
                         
-                        <!-- Noise Texture -->
-                        <div class="absolute inset-0 bg-[url('/assets/noise.png')] opacity-5 mix-blend-overlay"></div>
+                        <!-- Wrapper to hide Watermark -->
+                        <div class="st-robot-wrapper">
+                            <iframe src='https://my.spline.design/cursorfollowingrobotforlandingpage-5NU0McsEOBFHsDQKPPYYrwB1/' frameborder='0' width='100%' height='100%'></iframe>
+                        </div>
                         
-                        <!-- Status Header -->
-                        <div class="flex items-center justify-between mb-10 border-b-2 border-st-red/30 pb-4 relative z-10">
+                        <!-- Status Header Overlay -->
+                        <div class="absolute top-6 left-8 right-8 flex items-center justify-between border-b border-st-red/40 pb-3 z-20 pointer-events-none">
                             <div class="flex items-center gap-3">
                                 <div class="relative">
-                                    <div class="w-3 h-3 rounded-full bg-st-red animate-pulse"></div>
-                                    <div class="absolute inset-0 w-3 h-3 rounded-full bg-st-red animate-ping"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-st-red animate-pulse"></div>
+                                    <div class="absolute inset-0 w-2.5 h-2.5 rounded-full bg-st-red animate-ping"></div>
                                 </div>
-                                <span class="text-xs uppercase tracking-[0.3em] text-st-red font-bold" style="text-shadow: 0 0 10px rgba(255,0,51,0.8);">SYSTEM ACTIVE</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <div class="w-2 h-2 rounded-full bg-st-red/50"></div>
-                                <div class="w-2 h-2 rounded-full bg-st-red"></div>
-                                <div class="w-2 h-2 rounded-full bg-st-red/50"></div>
-                            </div>
-                        </div>
-
-                        <!-- Innovative Countdown Grid -->
-                        <div class="grid grid-cols-2 gap-5 relative z-10">
-                            <!-- Days -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
-                                <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative z-10">
-                                    <span id="days" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">SIGNAL SYNC</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Hours -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
-                                <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative z-10">
-                                    <span id="hours" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">INTERFERENCE LEVEL</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Minutes -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-black/60 to-black/40 rounded-xl border-2 border-st-red/30 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 20px rgba(180,0,30,0.15), inset 0 0 15px rgba(180,0,30,0.04);">
-                                <div class="absolute inset-0 bg-gradient-to-br from-st-red/0 via-st-red/10 to-st-red/0 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
-                                <div class="relative z-10">
-                                    <span id="minutes" class="terminal-number block text-6xl font-mono font-black text-white tracking-tighter mb-2 group-hover/item:text-st-red transition-colors duration-500" style="text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 30px rgba(180,0,30,0.3);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-gray-400 font-bold group-hover/item:text-st-red/80 transition-colors duration-500">SIGNAL SYNC</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Seconds - Special Highlight -->
-                            <div class="countdown-card group/item relative p-6 bg-gradient-to-br from-st-red/20 via-st-red/10 to-st-red/20 rounded-xl border-2 border-st-red/60 hover:border-st-red transition-all duration-500 overflow-hidden" style="box-shadow: 0 0 35px rgba(180,0,30,0.4), inset 0 0 20px rgba(180,0,30,0.15);">
-                                <div class="absolute inset-0 bg-gradient-to-br from-st-red/30 via-st-red/20 to-st-red/30 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 animate-pulse-fast"></div>
-                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-st-red to-transparent opacity-100"></div>
-                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/item:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover/item:translate-x-[200%] transition-transform duration-1000"></div>
-                                <div class="relative z-10">
-                                    <span id="seconds" class="terminal-number block text-6xl font-mono font-black text-st-red tracking-tighter mb-2 group-hover/item:scale-110 transition-transform duration-500" style="text-shadow: 0 0 20px rgba(180,0,30,0.6), 0 0 40px rgba(180,0,30,0.35);">00</span>
-                                    <span class="text-[11px] uppercase tracking-[0.3em] text-st-red font-bold" style="text-shadow: 0 0 8px rgba(180,0,30,0.4);">INTERFERENCE LEVEL</span>
-                                </div>
+                                <span class="text-[11px] uppercase tracking-[0.4em] text-st-red font-bold" style="text-shadow: 0 0 15px rgba(255,0,51,0.9);">ROBOT UNIT-01 // ACTIVE</span>
                             </div>
                         </div>
                     </div>
@@ -413,95 +363,6 @@ export function initHome() {
     }
 
 
-    // Countdown Logic -> Date: March 6, 2026
-    const targetDate = new Date('March 6, 2026 09:00:00').getTime();
-
-    // Lab Terminal Glitch Effects
-    let previousValues = { days: null, hours: null, minutes: null, seconds: null };
-
-    // Function to trigger glitch effect on a number element
-    function triggerGlitch(element) {
-        if (!element) return;
-        element.classList.add('glitch');
-        setTimeout(() => element.classList.remove('glitch'), 300);
-    }
-
-    // Function to create random static line
-    function createStaticLine(parentElement) {
-        if (!parentElement) return;
-        const staticLine = document.createElement('div');
-        staticLine.className = 'static-line';
-        staticLine.style.top = `${Math.random() * 100}%`;
-        parentElement.appendChild(staticLine);
-        setTimeout(() => staticLine.remove(), 200);
-    }
-
-    // Random static line appearance (every 3-8 seconds)
-    function scheduleRandomStatic() {
-        const countdownCards = document.querySelectorAll('.countdown-card');
-        if (countdownCards.length > 0) {
-            const randomCard = countdownCards[Math.floor(Math.random() * countdownCards.length)];
-            createStaticLine(randomCard);
-        }
-        const nextDelay = 3000 + Math.random() * 5000; // 3-8 seconds
-        setTimeout(scheduleRandomStatic, nextDelay);
-    }
-
-    // Start random static effects
-    setTimeout(scheduleRandomStatic, 2000);
-
-    const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            clearInterval(interval);
-            document.getElementById('days').innerText = "00";
-            return; // Event started
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-
-        if (daysEl) {
-            const newValues = {
-                days: days.toString().padStart(2, '0'),
-                hours: hours.toString().padStart(2, '0'),
-                minutes: minutes.toString().padStart(2, '0'),
-                seconds: seconds.toString().padStart(2, '0')
-            };
-
-            // Update values and trigger glitch on change
-            if (previousValues.days !== newValues.days) {
-                daysEl.innerText = newValues.days;
-                triggerGlitch(daysEl);
-            }
-            if (previousValues.hours !== newValues.hours) {
-                hoursEl.innerText = newValues.hours;
-                triggerGlitch(hoursEl);
-            }
-            if (previousValues.minutes !== newValues.minutes) {
-                minutesEl.innerText = newValues.minutes;
-                triggerGlitch(minutesEl);
-            }
-            if (previousValues.seconds !== newValues.seconds) {
-                secondsEl.innerText = newValues.seconds;
-                // Subtle glitch on seconds (20% chance to make it less aggressive)
-                if (Math.random() > 0.8) {
-                    triggerGlitch(secondsEl);
-                }
-            }
-
-            previousValues = newValues;
-        } else {
-            clearInterval(interval);
-        }
-    }, 1000);
+    // 7. Initialize Scroll Animations (Optional - Already handled by Tailwind classes mostly)
+    console.log('Home initialized with Spline Robot');
 }

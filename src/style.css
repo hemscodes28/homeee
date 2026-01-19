@@ -415,6 +415,56 @@ canvas {
   animation: terminal-glitch 0.3s ease-out;
 }
 
+/* Robot Container Stranger Things Theme */
+.st-robot-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 520px;
+  background: radial-gradient(circle at center, rgba(255, 0, 51, 0.1) 0%, transparent 70%);
+  border: 2px solid rgba(255, 0, 51, 0.2);
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(255, 0, 51, 0.1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.st-robot-container:hover {
+  border-color: rgba(255, 0, 51, 0.8);
+  box-shadow: 0 0 70px rgba(255, 0, 51, 0.4), inset 0 0 50px rgba(255, 0, 51, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Wrapper to hide Spline watermark */
+.st-robot-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100% + 120px);
+  margin-bottom: -120px;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.st-robot-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  /* Cinematic Stranger Things Red Shift */
+  filter: sepia(1) hue-rotate(-50deg) saturate(6) brightness(0.9) contrast(1.1);
+}
+
+.st-robot-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 10;
+}
+
 /* Static line effect */
 .static-line {
   position: absolute;
