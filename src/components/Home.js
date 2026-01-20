@@ -3,6 +3,7 @@ import { TornPaperEffect } from '../utils/TornPaperEffect.js';
 import { initParticles } from '../utils/Particle.js';
 import { ElectricBorder } from '../utils/ElectricBorder.js';
 import { FuzzyText } from '../utils/FuzzyText.js';
+import { Countdown } from '../utils/Countdown.js';
 
 export function renderHome() {
     return `
@@ -154,8 +155,19 @@ export function renderHome() {
                         </div>
                      </div>
                      <!-- Countdown Timer Widget -->
-                     <div class="st-countdown-container col-span-1 md:col-span-2 relative p-8 rounded-2xl flex flex-col items-center justify-center min-h-[160px]">
-                        <a href="https://logwork.com/countdown-ac35" class="countdown-timer" data-style="circles" data-timezone="Asia/Kolkata" data-textcolor="#9a1c24" data-date="2026-03-06 13:31" data-background="#c1121f" data-digitscolor="#f0d8d8" data-unitscolor="#9a1c24">Countdown Timer</a>
+                     <!-- Countdown Timer Widget -->
+                     <div class="st-countdown-container col-span-1 md:col-span-2 relative p-8 rounded-2xl flex flex-col items-center justify-center min-h-[160px] group/countdown transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,51,0.3)] border border-st-red/20 backdrop-blur-md bg-black/40">
+                        <div id="premium-countdown" class="w-full flex justify-center items-center"></div>
+                        
+                        <!-- Decorative corners -->
+                        <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-st-red/30 rounded-tl-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
+                        <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-st-red/30 rounded-tr-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
+                        <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-st-red/30 rounded-bl-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
+                        <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-st-red/30 rounded-br-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
+                        
+                        <!-- Pulsing dots -->
+                        <div class="absolute top-4 right-4 w-1.5 h-1.5 bg-st-red rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,51,0.8)]"></div>
+                        <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-st-red rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,51,0.8)]" style="animation-delay: 0.5s;"></div>
                      </div>
                 </div>
 
@@ -196,7 +208,7 @@ export function renderHome() {
                         </div>
                     </div>
                 </div>
-            </div>>
+            </div>
         </div>
       </div>
     </div>
@@ -251,15 +263,12 @@ export function initHome() {
         });
     }
 
-    // 2. Add Re-initialization Logic for Logwork Countdown
-    // Standard widget behavior: re-inject script to trigger scan for widgets in DOM
-    const existingScript = document.querySelector('script[src*="logwork.com/widget/countdown.js"]');
-    if (existingScript) existingScript.remove();
-
-    const newScript = document.createElement('script');
-    newScript.src = 'https://cdn.logwork.com/widget/countdown.js';
-    newScript.async = true;
-    document.head.appendChild(newScript);
+    // 2. Initialize Premium Countdown with Custom Component
+    const countdownContainer = document.getElementById('premium-countdown');
+    if (countdownContainer) {
+        // March 6th, 2026 at 9:30 AM
+        new Countdown(countdownContainer, '2026-03-06T09:30:00');
+    }
 
     // 2. Initialize Magic Bento Effect on BACKGROUND
     // const bgContainer = document.getElementById('magic-bento-background');
