@@ -1,5 +1,6 @@
 import './style.css';
 import { renderLoader, initLoader } from './components/Loader.js';
+import { renderReadyToRoar, initReadyToRoar } from './components/ReadyToRoar.js';
 import { renderTransition, initTransition } from './components/Transition.js';
 import { renderHome, initHome } from './components/Home.js';
 
@@ -29,6 +30,7 @@ if (!app) {
 // State Management
 const STATE = {
   LOADING: 'LOADING',
+  READY_TO_ROAR: 'READY_TO_ROAR',
   TRANSITION: 'TRANSITION',
   HOME: 'HOME'
 };
@@ -48,7 +50,11 @@ function render() {
   try {
     if (currentState === STATE.LOADING) {
       app.innerHTML = renderLoader();
-      initLoader(() => switchState(STATE.TRANSITION));
+      initLoader(() => switchState(STATE.READY_TO_ROAR));
+    }
+    else if (currentState === STATE.READY_TO_ROAR) {
+      app.innerHTML = renderReadyToRoar();
+      initReadyToRoar(() => switchState(STATE.TRANSITION));
     }
     else if (currentState === STATE.TRANSITION) {
       app.innerHTML = renderTransition();
