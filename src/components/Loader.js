@@ -2,6 +2,8 @@
 export function renderLoader() {
   return `
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
+
       :root {
         --color-bg: #000;
         --color-title: #C11B1F;
@@ -9,7 +11,7 @@ export function renderLoader() {
         --color-credits-top: #D2D0D1;
         --color-credits-bottom: #C8C6C7;
         --font-title: 'Benguiat', serif;
-        --font-credits: Arial, Helvetica Neue, Helvetica, sans-serif;
+        --font-credits: 'Oswald', sans-serif;
         --title-fsize: 28vmin;
         --title-fsize-large: 34vmin;
         --title-spacing: -1.3vmin;
@@ -75,17 +77,20 @@ export function renderLoader() {
       .intro-title {
         font-family: var(--font-title);
         color: var(--color-title);
-        font-size: 34px;
-        margin-bottom: 15px;
+        font-size: 56px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px rgba(193, 27, 31, 0.6), 0 0 20px rgba(193, 27, 31, 0.4);
+        letter-spacing: 1px;
       }
 
       .intro-text {
         text-align: center;
         color: var(--color-credits);
         font-size: 16px;
-        line-height: 22px;
-        font-family: var(--font-credits);
+        line-height: 24px;
+        font-family: 'Courier New', Courier, monospace; /* Lab report style */
         display: none;
+        opacity: 0.8;
       }
 
       .intro-text--show {
@@ -101,40 +106,63 @@ export function renderLoader() {
         width: 160px;
         height: 42px;
         line-height: 42px;
-        border: none;
+        border: 1px solid var(--color-title);
         text-decoration: none;
-        font-size: 16px;
-        border-radius: 4px;
+        font-size: 14px;
+        border-radius: 2px;
         font-family: var(--font-credits);
-        background: var(--color-title);
-        color: #FFF;
+        background: rgba(193, 27, 31, 0.1);
+        color: #C8C6C7;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
       }
 
       .intro-text-button:hover {
-        background: #9d1519;
+        background: rgba(193, 27, 31, 0.3);
+        box-shadow: 0 0 10px rgba(193, 27, 31, 0.4);
+        color: #FFF;
       }
 
       .intro-text-play {
         display: block;
         cursor: pointer;
-        width: 120px;
-        height: 120px;
-        margin: 30px auto 0;
-        border: 4px solid #FFF;
-        font-size: 40px;
-        text-indent: 10px;
-        color: #FFF;
-        background: rgba(85, 85, 85, 0.2);
-        opacity: 0.3;
-        border-radius: 100%;
-        transition: color 100ms ease, opacity 100ms ease;
-        transform: translateZ(0);
+        margin: 40px auto 0;
+        padding: 15px 40px;
+        background: transparent;
+        border: 1px solid var(--color-title);
+        color: var(--color-title);
+        font-family: var(--font-title);
+        font-size: 18px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(193, 27, 31, 0.2);
+        position: relative;
+        overflow: hidden;
       }
 
-      .intro-text-play:hover, .intro-text-play:focus {
-        opacity: 1;
-        color: var(--color-title);
-        outline: 0;
+      .intro-text-play:hover {
+        background: var(--color-title);
+        color: #000;
+        box-shadow: 0 0 30px rgba(193, 27, 31, 0.6), 0 0 60px rgba(193, 27, 31, 0.3);
+        transform: scale(1.05);
+        text-shadow: none;
+      }
+
+      .intro-text-play::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+      }
+
+      .intro-text-play:hover::before {
+        left: 100%;
       }
 
       .viewport {
@@ -432,9 +460,10 @@ export function renderLoader() {
 
       /* Full Title Keyframes */
       @keyframes full-title {
-        0% { opacity: 1; transform: translate(-50%, -41%) scale(0.8); }
-        90% { opacity: 1; }
-        100% { opacity: 0; transform: translate(-50%, -45%) scale(0.06); }
+        0% { opacity: 1; transform: translate(-50%, -41%) scale(0.8); color: var(--color-bg); }
+        80% { color: var(--color-bg); }
+        90% { opacity: 1; color: var(--color-title); }
+        100% { opacity: 0; transform: translate(-50%, -45%) scale(0.06); color: var(--color-title); }
       }
       @keyframes full-s1 { 0%, 50% { transform: translateX(-200%); } 76%, 100% { transform: translateX(0%); } }
       @keyframes full-t1 { 0%, 40% { transform: translateY(-120%); } 75%, 100% { transform: translateY(0%); } }
@@ -494,14 +523,18 @@ export function renderLoader() {
 
     <div id="loader-wrapper">
       <div class="intro">
-        <h1 class="intro-title">Intellina 2k26</h1>
-        <p class="intro-text intro-text--can intro-text--show" style="max-width: 600px; margin: 0 auto;">
-          The Department of AI & Data Science is opening a dimensional rift at C.I.T. 
-          Prepare for a technical encounter from a world beyond our own. 
-          Engage your audio transmitters—the frequencies are shifting.
+        <h1 class="intro-title">INTELLINA 2K26</h1>
+        <p class="intro-text intro-text--can intro-text--show" style="max-width: 600px; margin: 0 auto; letter-spacing: 0.5px;">
+          <span style="display: block; margin-bottom: 1em; text-transform: uppercase; font-size: 0.8em; letter-spacing: 2px; color: #666;">-- U.S. DEPARTMENT OF ENERGY --</span>
+          The Department of AI & Data Science is cracking the dimensional barrier at C.I.T. 
+          <br><br>
+          <span style="color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5);">WARNING:</span> The frequencies are unstable. 
+          Engage your audio transmitters for safe passage.
           <br/>
-          <span class="block mt-6 text-st-red font-bold animate-pulse tracking-[0.2em]">TOUCH THE RIFT TO PROCEED</span>
-          <button class="intro-text-play mt-4" data-play style="font-size: 14px; text-indent: 0; font-family: var(--font-title); letter-spacing: 2px;">OPEN THE GATE</button>
+          
+          <button class="intro-text-play mt-8" data-play>
+            OPEN THE GATE
+          </button>
         </p>
 
         <p class="intro-text intro-text--shouldnt">
@@ -602,7 +635,7 @@ export function renderLoader() {
           <div class="credits-group"><div class="credits-group-credit" data-text="Get Ready">Get Ready</div></div>
           <div class="credits-group">
             <div class="credits-group-sub" data-text="To Enter">To Enter</div>
-            <div class="credits-group-credit" data-text="The Upside Down">The Upside Down</div>
+            <div class="credits-group-credit" data-text="The National Level Tech Symposium">The National Level Tech Symposium</div>
           </div>
           
         </div>
@@ -672,6 +705,11 @@ export function initLoader(onComplete) {
         credit.classList.add('credits-group--show');
       }, i * creditsMs);
     });
+
+    // Hide the last credit after its duration
+    setTimeout(() => {
+      if (credits[credits.length - 1]) credits[credits.length - 1].classList.remove('credits-group--show');
+    }, credits.length * creditsMs);
 
     let offset = 0;
     scenes.forEach((scene, i) => {
