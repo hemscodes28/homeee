@@ -1,7 +1,6 @@
 import { MagicBento } from '../utils/MagicBento.js';
 import { TornPaperEffect } from '../utils/TornPaperEffect.js';
 import { initParticles } from '../utils/Particle.js';
-import { ElectricBorder } from '../utils/ElectricBorder.js';
 import { FuzzyText } from '../utils/FuzzyText.js';
 import { Countdown } from '../utils/Countdown.js';
 
@@ -28,8 +27,8 @@ export function renderHome() {
       </div>
 
       <!-- Ultra-Innovative Holographic Navbar -->
-      <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-6xl">
-        <div id="innovative-navbar" class="relative bg-gradient-to-r from-black/70 via-black/60 to-black/70 backdrop-blur-2xl border-2 border-st-red/30 rounded-full px-8 py-4 flex justify-between items-center shadow-[0_0_30px_rgba(255,0,51,0.3),inset_0_0_30px_rgba(255,0,51,0.05)] hover:shadow-[0_0_60px_rgba(255,0,51,0.6),inset_0_0_50px_rgba(255,0,51,0.1)] transition-all duration-700 overflow-hidden group/nav" style="box-shadow: 0 0 30px rgba(255,0,51,0.3), inset 0 0 30px rgba(255,0,51,0.05), 0 8px 32px rgba(0,0,0,0.5);">
+      <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] max-w-7xl">
+        <div id="innovative-navbar" class="innovative-navbar glass-premium glass-premium--red rounded-full px-8 py-4 flex justify-between items-center group/nav overflow-hidden relative" style="border-radius: 9999px;">
              <!-- Holographic Grid Pattern -->
              <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,0,51,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,51,0.3) 1px, transparent 1px); background-size: 15px 15px; animation: nav-grid-move 15s linear infinite;"></div>
              
@@ -55,57 +54,49 @@ export function renderHome() {
              <!-- Noise Texture Overlay -->
              <div class="absolute inset-0 bg-[url('/assets/noise.png')] opacity-5 mix-blend-overlay rounded-full"></div>
              
-             <div class="flex items-center space-x-3 group cursor-pointer relative z-10">
-                <div class="relative w-10 h-10 flex items-center justify-center">
-                    <div class="absolute inset-0 bg-st-red blur-lg opacity-50 group-hover:opacity-100 group-hover:blur-xl transition-all duration-300"></div>
-                    <div class="absolute inset-0 bg-st-red/30 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 opacity-0 group-hover:opacity-100"></div>
-                    <div class="relative z-10 w-10 h-10 bg-black border-2 border-st-red rounded flex items-center justify-center font-bold text-st-red rotate-3 group-hover:rotate-0 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,0,51,0.8)]">I</div>
+             <div class="flex items-center space-x-4 group cursor-pointer relative z-10 transition-all duration-500 hover:scale-110">
+                <div class="relative w-12 h-12 flex items-center justify-center logo-animate">
+                    <div class="absolute inset-0 bg-st-red blur-xl opacity-40 group-hover:opacity-100 group-hover:blur-2xl transition-all duration-700 rounded-full"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-st-red/40 to-white/20 rounded-full scale-0 group-hover:scale-125 transition-transform duration-700 opacity-0 group-hover:opacity-100 animate-pulse"></div>
+                    <div class="relative z-10 w-12 h-12 bg-black border-2 border-st-red rounded-full overflow-hidden flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(255,0,51,1)] group-hover:border-white/50">
+                        <img src="/assets/logo.jpeg" alt="Intellina Logo" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12">
+                    </div>
                 </div>
-                <span class="text-xl font-bold tracking-[0.2em] text-white group-hover:text-st-red transition-all duration-300 whitespace-nowrap group-hover:drop-shadow-[0_0_10px_rgba(255,0,51,0.8)]">INTELLINA</span>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-[0.3em] text-white group-hover:text-st-red transition-all duration-700 whitespace-nowrap group-hover:drop-shadow-[0_0_20px_rgba(255,0,51,1)] group-hover:tracking-[0.4em] transform group-hover:scale-105 origin-left">INTELLINA</span>
+                    <span class="text-[8px] tracking-[1em] text-st-red/80 font-bold group-hover:text-white transition-all duration-500">2K26 SYMPO</span>
+                </div>
              </div>
 
-             <ul class="hidden md:flex items-center space-x-6 relative z-10">
-                 <li><a href="#" class="nav-link relative text-sm font-bold tracking-widest text-gray-300 hover:text-white transition-all duration-300 py-2 px-3 rounded-lg group/link overflow-hidden">
+             <ul class="hidden md:flex items-center space-x-8 relative z-10">
+                 <li><a href="#" class="nav-link relative text-sm font-black tracking-[0.2em] text-gray-400 hover:text-white transition-all duration-500 py-2 px-4 rounded-xl group/link overflow-hidden">
                     <span class="relative z-10">HOME</span>
-                    <!-- Animated Underline -->
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-st-red via-white to-st-red group-hover/link:w-full transition-all duration-500 ease-out" style="box-shadow: 0 0 10px rgba(255,0,51,0.8);"></span>
-                    <!-- Background Glow -->
-                    <span class="absolute inset-0 bg-gradient-to-r from-st-red/10 via-st-red/20 to-st-red/10 rounded-lg opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 blur-sm"></span>
-                    <!-- Corner Accents -->
-                    <span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
-                    <span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
+                    <!-- Animated Gradient Underline -->
+                    <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-gradient-to-r from-transparent via-st-red to-transparent group-hover/link:w-full transition-all duration-700 ease-in-out" style="box-shadow: 0 0 15px rgba(255,0,51,0.8);"></span>
+                    <!-- Internal Shimmer -->
+                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-st-red/10 to-transparent -translate-x-full group-hover/link:translate-x-full transition-transform duration-1000"></span>
                  </a></li>
-                 <li><a href="#" class="nav-link relative text-sm font-bold tracking-widest text-gray-300 hover:text-white transition-all duration-300 py-2 px-3 rounded-lg group/link overflow-hidden">
+                 <li><a href="#" class="nav-link relative text-sm font-black tracking-[0.2em] text-gray-400 hover:text-white transition-all duration-500 py-2 px-4 rounded-xl group/link overflow-hidden">
                     <span class="relative z-10">ABOUT</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-st-red via-white to-st-red group-hover/link:w-full transition-all duration-500 ease-out" style="box-shadow: 0 0 10px rgba(255,0,51,0.8);"></span>
-                    <span class="absolute inset-0 bg-gradient-to-r from-st-red/10 via-st-red/20 to-st-red/10 rounded-lg opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 blur-sm"></span>
-                    <span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
-                    <span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
+                    <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-gradient-to-r from-transparent via-st-red to-transparent group-hover/link:w-full transition-all duration-700 ease-in-out" style="box-shadow: 0 0 15px rgba(255,0,51,0.8);"></span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-st-red/10 to-transparent -translate-x-full group-hover/link:translate-x-full transition-transform duration-1000"></span>
                  </a></li>
-                 <li><a href="#" class="nav-link relative text-sm font-bold tracking-widest text-gray-300 hover:text-white transition-all duration-300 py-2 px-3 rounded-lg group/link overflow-hidden">
+                 <li><a href="#" class="nav-link relative text-sm font-black tracking-[0.2em] text-gray-400 hover:text-white transition-all duration-500 py-2 px-4 rounded-xl group/link overflow-hidden">
                     <span class="relative z-10">EVENTS</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-st-red via-white to-st-red group-hover/link:w-full transition-all duration-500 ease-out" style="box-shadow: 0 0 10px rgba(255,0,51,0.8);"></span>
-                    <span class="absolute inset-0 bg-gradient-to-r from-st-red/10 via-st-red/20 to-st-red/10 rounded-lg opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 blur-sm"></span>
-                    <span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
-                    <span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
+                    <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-gradient-to-r from-transparent via-st-red to-transparent group-hover/link:w-full transition-all duration-700 ease-in-out" style="box-shadow: 0 0 15px rgba(255,0,51,0.8);"></span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-st-red/10 to-transparent -translate-x-full group-hover/link:translate-x-full transition-transform duration-1000"></span>
                  </a></li>
-                 <li><a href="#" class="nav-link relative text-sm font-bold tracking-widest text-gray-300 hover:text-white transition-all duration-300 py-2 px-3 rounded-lg group/link overflow-hidden">
+                 <li><a href="#" class="nav-link relative text-sm font-black tracking-[0.2em] text-gray-400 hover:text-white transition-all duration-500 py-2 px-4 rounded-xl group/link overflow-hidden">
                     <span class="relative z-10">TIMELINE</span>
-                    <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-st-red via-white to-st-red group-hover/link:w-full transition-all duration-500 ease-out" style="box-shadow: 0 0 10px rgba(255,0,51,0.8);"></span>
-                    <span class="absolute inset-0 bg-gradient-to-r from-st-red/10 via-st-red/20 to-st-red/10 rounded-lg opacity-0 group-hover/link:opacity-100 transition-opacity duration-300 blur-sm"></span>
-                    <span class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
-                    <span class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-st-red opacity-0 group-hover/link:opacity-100 transition-opacity duration-300"></span>
+                    <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-gradient-to-r from-transparent via-st-red to-transparent group-hover/link:w-full transition-all duration-700 ease-in-out" style="box-shadow: 0 0 15px rgba(255,0,51,0.8);"></span>
+                    <span class="absolute inset-0 bg-gradient-to-r from-transparent via-st-red/10 to-transparent -translate-x-full group-hover/link:translate-x-full transition-transform duration-1000"></span>
                  </a></li>
              </ul>
 
-             <button class="px-8 py-3 bg-gradient-to-r from-st-red via-red-600 to-st-red text-white font-bold text-sm tracking-wider rounded-full hover:scale-110 hover:shadow-[0_0_40px_rgba(255,0,51,1),inset_0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 shadow-[0_4px_20px_rgba(255,0,51,0.6)] relative z-10 overflow-hidden group/btn" style="background: linear-gradient(135deg, #ff0033 0%, #cc0026 50%, #ff0033 100%); background-size: 200% 200%; animation: btn-gradient-shift 3s ease infinite;">
-                 <!-- Animated Gradient Background -->
-                 <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 opacity-0 group-hover/btn:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700"></div>
-                 <!-- Pulsing Ring -->
-                 <div class="absolute inset-0 rounded-full border-2 border-white/50 opacity-0 group-hover/btn:opacity-100 group-hover/btn:scale-125 transition-all duration-500 animate-ping"></div>
-                 <!-- Inner Glow -->
-                 <div class="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                 <span class="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">CONTACT</span>
+             <button class="px-10 py-3 bg-black text-white font-black text-xs tracking-[0.3em] rounded-full border-2 border-st-red/50 hover:border-st-red hover:bg-st-red hover:text-black transition-all duration-500 hover:scale-110 hover:shadow-[0_0_40px_rgba(255,0,51,0.6)] relative z-10 overflow-hidden group/btn">
+                 <span class="relative z-10">CONTACT</span>
+                 <!-- Contact Btn Glow -->
+                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
              </button>
         </div>
       </nav>
@@ -115,64 +106,44 @@ export function renderHome() {
         <!-- Pointer events re-enabled on interactive children -->
         <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
             
-            <!-- Left Column: Title & Info -->
-            <div class="w-full lg:w-1/2 space-y-10 animate-slide-up opacity-0 pointer-events-auto" style="animation-fill-mode: forwards; animation-delay: 0.2s;">
-                <div class="relative overflow-visible" style="min-width: 100%;">
+            <!-- Left Column: Netflix-Style Title & Info -->
+            <div class="w-full lg:w-3/5 space-y-8 animate-slide-up opacity-0 pointer-events-auto text-left" style="animation-fill-mode: forwards; animation-delay: 0.2s;">
+                <div class="relative overflow-visible mb-2" style="min-width: 100%;">
                     <!-- Fuzzy Text Containers -->
                     <div id="fuzzy-title" class="relative z-10"></div>
                     <div id="fuzzy-subtitle" class="absolute -bottom-4 right-0 md:right-12 mix-blend-screen z-20 pointer-events-none"></div>
                 </div>
+
+                <!-- Metadata Row (Netflix Style) -->
+                <div class="flex items-center space-x-6 text-sm md:text-base font-bold tracking-wider">
+                    <span class="text-green-500">99% Match</span>
+                    <span class="text-gray-300">2026</span>
+                    <span class="border border-gray-500 px-2 py-0.5 text-xs text-gray-300 rounded">18+</span>
+                    <div class="flex items-center text-st-red">
+                        <span class="mr-1">9.9/10</span>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span class="ml-1 text-gray-400 font-normal">C.I.T.</span>
+                    </div>
+                    <span class="text-gray-400 font-medium">Technical Symposium</span>
+                </div>
                 
-                <p class="text-gray-300 text-lg md:text-xl max-w-xl leading-relaxed border-l-4 border-st-red pl-6">
-                    Enter the portal to the ultimate technical symposium. <br/>
-                    <span class="text-st-red font-bold">Unleash your potential</span> in the Upside Down.
+                <p class="text-gray-200 text-lg md:text-xl max-w-2xl leading-relaxed font-merriweather drop-shadow-lg">
+                    "Intellina 2k26" is the premier national level technical symposium hosted by the 
+                    <span class="text-st-red font-bold">Department of Artificial Intelligence and Data Science</span> at C.I.T. 
+                    Enter a dimension where technology meets the supernatural, featuring high-stakes coding battles, 
+                    AI innovations, and the ultimate technical challenges.
                 </p>
 
-                <!-- Info Grid (Static/Interactive cards, NOT Bento bg) -->
-                <div id="foreground-bento-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 perspective-1000">
-                     <!-- Date -->
-                     <div id="date-card" class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[1.02]">
-                        <!-- Electric border will be injected here on hover -->
-                        
-                        <!-- Subtle shimmer effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out rounded-2xl"></div>
-                        
-                        <div class="relative z-10">
-                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_12px_rgba(180,0,30,0.6)] transform group-hover:scale-105 group-hover:translate-x-1">MARCH 6 & 7</h3>
-                            <p class="text-gray-400 text-sm tracking-widest uppercase group-hover:text-gray-200 transition-colors duration-500 group-hover:translate-x-1">2026</p>
-                        </div>
-                     </div>
-                     <!-- Location -->
-                     <div id="location-card" class="magic-bento-card relative bg-black/40 backdrop-blur-xl border border-white/5 p-8 rounded-2xl group cursor-pointer overflow-visible transition-all duration-700 ease-out hover:-translate-y-2 hover:scale-[1.02]">
-                        <!-- Electric border will be injected here on hover -->
-                        
-                        <!-- Subtle shimmer effect -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out rounded-2xl"></div>
-                        
-                        <div class="relative z-10">
-                            <h3 class="text-4xl font-bold text-white mb-2 group-hover:text-st-red transition-all duration-500 group-hover:drop-shadow-[0_0_12px_rgba(180,0,30,0.6)] transform group-hover:scale-105 group-hover:translate-x-1">C.I.T.</h3>
-                            <p class="text-gray-400 text-sm tracking-widest uppercase group-hover:text-gray-200 transition-colors duration-500 group-hover:translate-x-1">Coimbatore</p>
-                        </div>
-                     </div>
-                     <!-- Countdown Timer Widget -->
-                     <!-- Countdown Timer Widget -->
-                     <div class="st-countdown-container col-span-1 md:col-span-2 relative p-8 rounded-2xl flex flex-col items-center justify-center min-h-[160px] group/countdown transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,51,0.3)] border border-st-red/20 backdrop-blur-md bg-black/40">
-                        <div id="premium-countdown" class="w-full flex justify-center items-center"></div>
-                        
-                        <!-- Decorative corners -->
-                        <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-st-red/30 rounded-tl-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
-                        <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-st-red/30 rounded-tr-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
-                        <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-st-red/30 rounded-bl-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
-                        <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-st-red/30 rounded-br-lg group-hover/countdown:border-st-red group-hover/countdown:shadow-[0_0_10px_rgba(255,0,51,0.5)] transition-all duration-500"></div>
-                        
-                        <!-- Pulsing dots -->
-                        <div class="absolute top-4 right-4 w-1.5 h-1.5 bg-st-red rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,51,0.8)]"></div>
-                        <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-st-red rounded-full animate-pulse shadow-[0_0_8px_rgba(255,0,51,0.8)]" style="animation-delay: 0.5s;"></div>
-                     </div>
-                </div>
-
-                <div class="flex gap-4">
-                     <button class="px-8 py-4 bg-transparent border-2 border-st-red text-st-red font-bold text-xl rounded hover:bg-st-red hover:text-black transition-colors duration-300">
+                <div class="flex flex-wrap gap-4 pt-4">
+                     <!-- Play/Register Button -->
+                     <button class="flex items-center gap-3 px-10 py-3 bg-white text-black font-bold text-lg rounded-md hover:bg-white/80 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        REGISTER
+                     </button>
+                     
+                     <!-- My List/Explore Button -->
+                     <button class="flex items-center gap-3 px-10 py-3 bg-gray-500/30 backdrop-blur-md text-white border border-gray-400/30 font-bold text-lg rounded-md hover:bg-gray-500/50 transition-all duration-300 transform hover:scale-105 active:scale-95">
+                        <svg class="w-6 h-6 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
                         EXPLORE EVENTS
                      </button>
                 </div>
@@ -285,71 +256,9 @@ export function initHome() {
 
 
 
-    // 5. Initialize Electric Border on Date Card (Hover-activated)
-    const dateCard = document.getElementById('date-card');
-    if (dateCard) {
-        let electricBorder = null;
-        let isHovering = false;
 
-        dateCard.addEventListener('mouseenter', () => {
-            isHovering = true;
-            setTimeout(() => {
-                if (isHovering && !electricBorder) {
-                    electricBorder = new ElectricBorder(dateCard, {
-                        color: '#ff0033',
-                        speed: 1,
-                        chaos: 0.12,
-                        borderRadius: 16,
-                        borderOffset: 40,
-                        displacement: 50
-                    });
-                }
-            }, 100);
-        });
-
-        dateCard.addEventListener('mouseleave', () => {
-            isHovering = false;
-            setTimeout(() => {
-                if (!isHovering && electricBorder) {
-                    electricBorder.destroy();
-                    electricBorder = null;
-                }
-            }, 300);
-        });
-    }
-
-    // 6. Initialize Electric Border on Location Card (Hover-activated)
-    const locationCard = document.getElementById('location-card');
-    if (locationCard) {
-        let electricBorder = null;
-        let isHovering = false;
-
-        locationCard.addEventListener('mouseenter', () => {
-            isHovering = true;
-            setTimeout(() => {
-                if (isHovering && !electricBorder) {
-                    electricBorder = new ElectricBorder(locationCard, {
-                        color: '#ff0033',
-                        speed: 1,
-                        chaos: 0.12,
-                        borderRadius: 16,
-                        borderOffset: 40,
-                        displacement: 50
-                    });
-                }
-            }, 100);
-        });
-
-        locationCard.addEventListener('mouseleave', () => {
-            isHovering = false;
-            setTimeout(() => {
-                if (!isHovering && electricBorder) {
-                    electricBorder.destroy();
-                    electricBorder = null;
-                }
-            }, 300);
-        });
-    }
+    //     });
+    // }
 
 
     // 7. Initialize Scroll Animations (Optional - Already handled by Tailwind classes mostly)
