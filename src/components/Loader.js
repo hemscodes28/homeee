@@ -519,6 +519,80 @@ export function renderLoader() {
       .title--full .titlebar--left { transform-origin: right; }
       .title--full .titlebar--right { transform-origin: left; }
 
+      /* Skip Intro Button Styles */
+      .skip-intro-btn {
+        position: fixed;
+        bottom: 80px;
+        right: 50px;
+        z-index: 10000;
+        padding: 16px 32px;
+        background: rgba(10, 10, 10, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 2px solid rgba(193, 27, 31, 0.4);
+        border-radius: 8px;
+        color: #C8C6C7;
+        font-family: 'Benguiat', serif;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(193, 27, 31, 0.2);
+        overflow: hidden;
+        display: none;
+        opacity: 0;
+      }
+
+      .skip-intro-btn--show {
+        display: block;
+        opacity: 1;
+      }
+
+      .skip-intro-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(193, 27, 31, 0.3), transparent);
+        transition: left 0.6s ease;
+      }
+
+      .skip-intro-btn:hover::before {
+        left: 100%;
+      }
+
+      .skip-intro-btn:hover {
+        background: rgba(193, 27, 31, 0.2);
+        border-color: rgba(193, 27, 31, 0.9);
+        color: #FFFFFF;
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 8px 40px rgba(193, 27, 31, 0.5), 0 0 60px rgba(193, 27, 31, 0.4), inset 0 0 20px rgba(193, 27, 31, 0.2);
+        text-shadow: 0 0 10px rgba(193, 27, 31, 0.8), 0 0 20px rgba(193, 27, 31, 0.5);
+      }
+
+      .skip-intro-btn:active {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 4px 20px rgba(193, 27, 31, 0.4), 0 0 40px rgba(193, 27, 31, 0.3);
+      }
+
+      /* Pulsing glow animation */
+      @keyframes skip-btn-pulse {
+        0%, 100% {
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(193, 27, 31, 0.2);
+        }
+        50% {
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(193, 27, 31, 0.4);
+        }
+      }
+
+      .skip-intro-btn {
+        animation: skip-btn-pulse 3s ease-in-out infinite;
+      }
+
     </style>
 
     <div id="loader-wrapper">
@@ -649,6 +723,11 @@ export function renderLoader() {
         <div class="letterbox-cover letterbox-cover--right"></div>
         <div class="letterbox-cover letterbox-cover--bottom"></div>
       </div>
+
+      <!-- Skip Intro Button -->
+      <button class="skip-intro-btn" data-skip-intro>
+        Skip Intro
+      </button>
     </div>
   `;
 }
@@ -699,6 +778,12 @@ export function initLoader(onComplete) {
     viewport.classList.add('viewport--show');
     letterbox.classList.add('letterbox--show');
 
+    // Show the skip intro button when animation starts
+    const skipBtn = document.querySelector('[data-skip-intro]');
+    if (skipBtn) {
+      skipBtn.classList.add('skip-intro-btn--show');
+    }
+
     credits.forEach((credit, i) => {
       setTimeout(() => {
         if (credits[i - 1]) credits[i - 1].classList.remove('credits-group--show');
@@ -737,4 +822,22 @@ export function initLoader(onComplete) {
 
   const btns = document.querySelectorAll("[data-play]");
   btns.forEach(btn => btn.addEventListener('click', start));
+
+  // Skip Intro Button Handler
+  const skipBtn = document.querySelector('[data-skip-intro]');
+  if (skipBtn) {
+    skipBtn.addEventListener('click', () => {
+      // Stop music if playing
+      if (!music.paused) {
+        music.pause();
+        music.currentTime = 0;
+      }
+
+      // Hide the skip button
+      skipBtn.style.display = 'none';
+
+      // Immediately call onComplete to transition to next page
+      onComplete();
+    });
+  }
 }
