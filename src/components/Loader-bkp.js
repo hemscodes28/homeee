@@ -753,6 +753,7 @@ export function initLoader(onComplete) {
   const finalCredit = document.querySelector('.credits-final');
 
   const music = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/161676/music.mp3");
+  const timeouts = [];
 
   const start = () => {
     intro.classList.add('intro--hide');
@@ -785,39 +786,45 @@ export function initLoader(onComplete) {
     }
 
     credits.forEach((credit, i) => {
-      setTimeout(() => {
+      const t1 = setTimeout(() => {
         if (credits[i - 1]) credits[i - 1].classList.remove('credits-group--show');
         credit.classList.add('credits-group--show');
       }, i * creditsMs);
+      timeouts.push(t1);
     });
 
     // Hide the last credit after its duration
-    setTimeout(() => {
+    const tLastCredit = setTimeout(() => {
       if (credits[credits.length - 1]) credits[credits.length - 1].classList.remove('credits-group--show');
     }, credits.length * creditsMs);
+    timeouts.push(tLastCredit);
 
     let offset = 0;
     scenes.forEach((scene, i) => {
-      setTimeout(() => {
+      const tScene = setTimeout(() => {
         if (scenes[i - 1]) scenes[i - 1].classList.remove('title--show');
         scene.classList.add('title--show');
       }, offset);
+      timeouts.push(tScene);
       offset += scenesMs[i];
     });
 
-    setTimeout(() => {
+    const tFullTitle = setTimeout(() => {
       scenes[scenes.length - 1].classList.remove('title--show');
       fullTitle.classList.add('title--show');
 
       // Complete callback after sequence
-      setTimeout(() => {
+      const tComplete = setTimeout(() => {
         onComplete();
       }, 20000);
+      timeouts.push(tComplete);
     }, offset);
+    timeouts.push(tFullTitle);
 
-    setTimeout(() => {
+    const tFinalCredit = setTimeout(() => {
       finalCredit.classList.add('credits-group--show');
     }, offset + 21000);
+    timeouts.push(tFinalCredit);
   };
 
   const btns = document.querySelectorAll("[data-play]");
@@ -827,6 +834,9 @@ export function initLoader(onComplete) {
   const skipBtn = document.querySelector('[data-skip-intro]');
   if (skipBtn) {
     skipBtn.addEventListener('click', () => {
+      // Clear all active timeouts
+      timeouts.forEach(t => clearTimeout(t));
+
       // Stop music if playing
       if (!music.paused) {
         music.pause();
@@ -836,8 +846,24 @@ export function initLoader(onComplete) {
       // Hide the skip button
       skipBtn.style.display = 'none';
 
-      // Immediately call onComplete to transition to next page
-      onComplete();
+      // Ensure intro is hidden
+      if (intro) intro.classList.add('intro--hide');
+
+      // Ensure viewport and letterbox are shown
+      if (viewport) viewport.classList.add('viewport--show');
+      if (letterbox) letterbox.classList.add('letterbox--show');
+
+      // Reset visibility of all elements
+      credits.forEach(c => c.classList.remove('credits-group--show'));
+      scenes.forEach(s => s.classList.remove('title--show'));
+
+      // Immediately show the final title (Intellina 2K26)
+      fullTitle.classList.add('title--show');
+
+      // Wait 3 seconds at the final look, then transition
+      setTimeout(() => {
+        onComplete();
+      }, 3000);
     });
   }
 }

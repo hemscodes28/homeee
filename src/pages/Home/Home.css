@@ -1,0 +1,59 @@
+/* content from original Home.css if any, specific to home page */
+
+/* Spline Hider */
+.st-robot-wrapper {
+    mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent 100%);
+}
+
+/* Typography Hierarchy */
+.hero-presents {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+}
+
+.hero-symposium {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #ff0033;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
+}
+
+.hero-description {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 500px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.hero-countdown-centered .st-flip-clock {
+    gap: 1rem;
+    transform: scale(0.8);
+    transform-origin: center top;
+    justify-content: center;
+}
+
+.hero-countdown-small .st-flip-card {
+    width: 35px;
+    height: 50px;
+}
+
+.hero-countdown-small .st-flip-card-inner {
+    font-size: 2rem;
+}
+
+.hero-countdown-small .st-flip-label {
+    font-size: 0.5rem;
+}
+
+.hero-countdown-small .st-separator {
+    font-size: 2rem;
+    margin-top: 0;
+}

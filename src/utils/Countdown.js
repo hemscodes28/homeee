@@ -66,11 +66,8 @@ export class Countdown {
                     0% {
                         transform: rotateX(0deg);
                     }
-                    50% {
-                        transform: rotateX(-90deg);
-                    }
                     100% {
-                        transform: rotateX(0deg);
+                        transform: rotateX(-180deg);
                     }
                 }
 
@@ -148,14 +145,10 @@ export class Countdown {
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
                         <div class="st-flip-card" id="d1-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="d1">0</div>
-                            </div>
                         </div>
                         <div class="st-flip-card" id="d2-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="d2">0</div>
-                            </div>
                         </div>
                     </div>
                     <div class="st-flip-label">Days</div>
@@ -167,14 +160,10 @@ export class Countdown {
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
                         <div class="st-flip-card" id="h1-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="h1">0</div>
-                            </div>
                         </div>
                         <div class="st-flip-card" id="h2-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="h2">0</div>
-                            </div>
                         </div>
                     </div>
                     <div class="st-flip-label">Hours</div>
@@ -186,14 +175,10 @@ export class Countdown {
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
                         <div class="st-flip-card" id="m1-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="m1">0</div>
-                            </div>
                         </div>
                         <div class="st-flip-card" id="m2-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="m2">0</div>
-                            </div>
                         </div>
                     </div>
                     <div class="st-flip-label">Minutes</div>
@@ -205,14 +190,10 @@ export class Countdown {
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
                         <div class="st-flip-card" id="s1-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="s1">0</div>
-                            </div>
                         </div>
                         <div class="st-flip-card" id="s2-container">
-                            <div class="st-flip-card-inner">
                             <div class="st-flip-card-inner" id="s2">0</div>
-                            </div>
                         </div>
                     </div>
                     <div class="st-flip-label">Seconds</div>

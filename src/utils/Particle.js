@@ -1,21 +1,24 @@
 export function initParticles(container) {
   const canvas = document.createElement('canvas');
-  canvas.style.position = 'absolute';
+  canvas.style.position = 'fixed';
   canvas.style.top = '0';
   canvas.style.left = '0';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
   canvas.style.pointerEvents = 'none';
   canvas.style.backgroundColor = 'transparent';
   canvas.style.zIndex = '1';
   container.appendChild(canvas);
 
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const updateSize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+  updateSize();
 
   const config = {
-    particleCount: 144,
+    particleCount: 200,
     particleColor: '#ffffff',
     particleSize: 3,
     particleOpacity: 0.5,
@@ -99,8 +102,7 @@ export function initParticles(container) {
   };
 
   const handleResize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    updateSize();
     initParticlesArray();
   };
 
