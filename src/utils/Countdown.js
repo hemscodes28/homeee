@@ -36,6 +36,13 @@ export class Countdown {
                     position: relative;
                     width: 50px;
                     height: 70px;
+                    perspective: 300px;
+                }
+
+                .st-flip-card-inner {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
                     background: linear-gradient(to bottom, #2a2a2a 50%, #202020 50%);
                     border-radius: 6px;
                     font-size: 3rem;
@@ -48,24 +55,41 @@ export class Countdown {
                         0 4px 6px rgba(0,0,0,0.5),
                         inset 0 1px 1px rgba(255,255,255,0.1);
                     overflow: hidden;
+                    transform-style: preserve-3d;
+                }
+
+                .st-flip-card.flipping .st-flip-card-inner {
+                    animation: flip-animation 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+                }
+
+                @keyframes flip-animation {
+                    0% {
+                        transform: rotateX(0deg);
+                    }
+                    50% {
+                        transform: rotateX(-90deg);
+                    }
+                    100% {
+                        transform: rotateX(0deg);
+                    }
                 }
 
                 /* Split Line */
-                .st-flip-card::after {
+                .st-flip-card-inner::after {
                     content: '';
                     position: absolute;
                     top: 50%;
                     left: 0;
                     width: 100%;
                     height: 2px;
-                    background: rgba(0,0,0,0.4);
+                    background: rgba(0,0,0,0.6);
                     transform: translateY(-50%);
                     z-index: 10;
                     box-shadow: 0 1px 0 rgba(255,255,255,0.05);
                 }
 
-                /* Red Glow on active/hover */
-                .st-countdown-container:hover .st-flip-card {
+                /* Red Glow on hover */
+                .st-countdown-container:hover .st-flip-card-inner {
                     box-shadow: 
                         0 0 15px rgba(255, 0, 51, 0.3),
                         0 4px 6px rgba(0,0,0,0.5);
@@ -104,6 +128,8 @@ export class Countdown {
                     .st-flip-card {
                         width: 30px;
                         height: 45px;
+                    }
+                    .st-flip-card-inner {
                         font-size: 1.8rem;
                     }
                     .st-flip-label {
@@ -121,8 +147,16 @@ export class Countdown {
                 <!-- Days -->
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
-                        <div class="st-flip-card" id="d1">0</div>
-                        <div class="st-flip-card" id="d2">0</div>
+                        <div class="st-flip-card" id="d1-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="d1">0</div>
+                            </div>
+                        </div>
+                        <div class="st-flip-card" id="d2-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="d2">0</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="st-flip-label">Days</div>
                 </div>
@@ -132,8 +166,16 @@ export class Countdown {
                 <!-- Hours -->
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
-                        <div class="st-flip-card" id="h1">0</div>
-                        <div class="st-flip-card" id="h2">0</div>
+                        <div class="st-flip-card" id="h1-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="h1">0</div>
+                            </div>
+                        </div>
+                        <div class="st-flip-card" id="h2-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="h2">0</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="st-flip-label">Hours</div>
                 </div>
@@ -143,8 +185,16 @@ export class Countdown {
                 <!-- Minutes -->
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
-                        <div class="st-flip-card" id="m1">0</div>
-                        <div class="st-flip-card" id="m2">0</div>
+                        <div class="st-flip-card" id="m1-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="m1">0</div>
+                            </div>
+                        </div>
+                        <div class="st-flip-card" id="m2-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="m2">0</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="st-flip-label">Minutes</div>
                 </div>
@@ -154,8 +204,16 @@ export class Countdown {
                 <!-- Seconds -->
                 <div class="st-flip-unit">
                     <div class="st-flip-card-wrapper">
-                        <div class="st-flip-card" id="s1">0</div>
-                        <div class="st-flip-card" id="s2">0</div>
+                        <div class="st-flip-card" id="s1-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="s1">0</div>
+                            </div>
+                        </div>
+                        <div class="st-flip-card" id="s2-container">
+                            <div class="st-flip-card-inner">
+                            <div class="st-flip-card-inner" id="s2">0</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="st-flip-label">Seconds</div>
                 </div>
@@ -203,10 +261,21 @@ export class Countdown {
         const d2 = str[1];
 
         if (this.elements[`${prefix}1`].textContent !== d1) {
+            // Trigger flip animation
+            const container1 = this.container.querySelector(`#${prefix}1-container`);
+            if (container1) {
+                container1.classList.add('flipping');
+                setTimeout(() => container1.classList.remove('flipping'), 600);
+            }
             this.elements[`${prefix}1`].textContent = d1;
-            // potential flip animation trigger here if detailed js needed
         }
         if (this.elements[`${prefix}2`].textContent !== d2) {
+            // Trigger flip animation
+            const container2 = this.container.querySelector(`#${prefix}2-container`);
+            if (container2) {
+                container2.classList.add('flipping');
+                setTimeout(() => container2.classList.remove('flipping'), 600);
+            }
             this.elements[`${prefix}2`].textContent = d2;
         }
     }

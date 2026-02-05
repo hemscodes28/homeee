@@ -17,6 +17,7 @@ export default {
       },
       animation: {
         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'glitch': 'glitch 1s linear infinite',
         'float': 'float 6s ease-in-out infinite',
         'marquee-fast': 'marquee 8s linear infinite',

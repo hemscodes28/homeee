@@ -1,4 +1,4 @@
-import { MagicBento } from '../utils/MagicBento.js';
+﻿import { MagicBento } from '../utils/MagicBento.js';
 import { TornPaperEffect } from '../utils/TornPaperEffect.js';
 import { initParticles } from '../utils/Particle.js';
 import { FuzzyText } from '../utils/FuzzyText.js';
@@ -54,16 +54,39 @@ export function renderHome() {
              <!-- Noise Texture Overlay -->
              <div class="absolute inset-0 bg-[url('/assets/noise.png')] opacity-5 mix-blend-overlay rounded-full"></div>
              
-             <div class="flex items-center space-x-4 group cursor-pointer relative z-10 transition-all duration-500 hover:scale-110">
-                <div class="relative w-12 h-12 flex items-center justify-center logo-animate">
-                    <div class="absolute inset-0 bg-st-red blur-xl opacity-40 group-hover:opacity-100 group-hover:blur-2xl transition-all duration-700 rounded-full"></div>
-                    <div class="absolute inset-0 bg-gradient-to-tr from-st-red/40 to-white/20 rounded-full scale-0 group-hover:scale-125 transition-transform duration-700 opacity-0 group-hover:opacity-100 animate-pulse"></div>
-                    <div class="relative z-10 w-12 h-12 bg-black border-2 border-st-red rounded-full overflow-hidden flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(255,0,51,1)] group-hover:border-white/50">
-                        <img src="/assets/logo.jpeg" alt="Intellina Logo" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12">
+             <div class="flex items-center space-x-3 group cursor-pointer relative z-10 transition-all duration-500 ">
+                <!-- College Logo with Premium Effects -->
+                <div class="relative flex items-center justify-center logo-animate">
+                    <!-- Glow Effects -->
+                    <div class="absolute inset-0 bg-white/20 blur-2xl opacity-0 group-hover:opacity-60 transition-all duration-700 rounded-xl"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-st-red/30 to-white/10 rounded-xl scale-0 group-hover:scale-110 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
+                    
+                    <!-- Logo Container with White Background -->
+                    <div class="relative z-10 bg-white rounded-lg overflow-hidden flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] px-3 py-2">
+                        <img src="/assets/college-logo.png" alt="Coimbatore Institute of Technology" class="h-12 w-auto object-contain transform transition-transform duration-700 group-">
                     </div>
                 </div>
+                
+                <!-- Vertical Divider -->
+                <div class="h-12 w-[2px] bg-gradient-to-b from-transparent via-st-red/50 to-transparent"></div>
+                
+                                
+                 <!-- Department Logo with Premium Effects -->
+                 <div class="relative flex items-center justify-center logo-animate">
+                     <!-- Glow Effects -->
+                     <div class="absolute inset-0 bg-white/20 blur-2xl opacity-0 group-hover:opacity-60 transition-all duration-700 rounded-full"></div>
+                     <div class="absolute inset-0 bg-gradient-to-tr from-st-red/30 to-white/10 rounded-full scale-0 group-hover:scale-110 transition-transform duration-700 opacity-0 group-hover:opacity-100"></div>
+                     
+                     <!-- Logo Container with White Background -->
+                     <div class="relative z-10 bg-white rounded-full overflow-hidden flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] p-1.5">
+                         <img src="/dept-logo.png" alt="AI & DS Association" class="h-10 w-10 object-contain transform transition-transform duration-700 group-">
+                     </div>
+                 </div>
+                 
+                 <!-- Vertical Divider -->
+                 <div class="h-12 w-[2px] bg-gradient-to-b from-transparent via-st-red/50 to-transparent"></div> <!-- INTELLINA Branding -->
                 <div class="flex flex-col">
-                    <span class="text-2xl font-black tracking-[0.3em] text-white group-hover:text-st-red transition-all duration-700 whitespace-nowrap group-hover:drop-shadow-[0_0_20px_rgba(255,0,51,1)] group-hover:tracking-[0.4em] transform group-hover:scale-105 origin-left">INTELLINA</span>
+                    <span class="text-2xl font-black tracking-[0.3em] text-white group-hover:text-st-red transition-all duration-700 whitespace-nowrap group-hover:drop-shadow-[0_0_20px_rgba(255,0,51,1)]  transform origin-left">INTELLINA</span>
                     <span class="text-[8px] tracking-[1em] text-st-red/80 font-bold group-hover:text-white transition-all duration-500">2K26 SYMPO</span>
                 </div>
              </div>
@@ -186,6 +209,55 @@ export function renderHome() {
             </div>
         </div>
       </div>
+
+      <!-- Premium Countdown Timer Section -->
+      <div class="relative z-10 container mx-auto px-6 py-16 pb-24">
+        <div class="flex flex-col items-center justify-center space-y-8 animate-slide-up opacity-0 pointer-events-auto" style="animation-fill-mode: forwards; animation-delay: 0.6s;">
+          
+          <!-- Section Title -->
+          <div class="text-center space-y-3">
+            <h2 class="text-4xl md:text-5xl font-black text-white tracking-wider" style="text-shadow: 0 0 30px rgba(255,0,51,0.6);">
+              EVENT COUNTDOWN
+            </h2>
+            <p class="text-gray-400 text-lg font-medium tracking-wide">
+              Time Until Intellina 2K26 Begins
+            </p>
+          </div>
+
+          <!-- Premium Countdown Container -->
+          <div class="relative w-full max-w-4xl">
+            <!-- Outer Glow Container -->
+            <div class="absolute inset-0 bg-gradient-to-r from-st-red/20 via-st-red/30 to-st-red/20 rounded-2xl blur-2xl opacity-60 animate-pulse-slow"></div>
+            
+            <!-- Main Timer Box -->
+            <div class="relative glass-premium glass-premium--red rounded-2xl p-8 md:p-12 border-2 border-st-red/40 overflow-hidden group/timer">
+              
+              <!-- Animated Background Grid -->
+              <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(rgba(255,0,51,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,0,51,0.3) 1px, transparent 1px); background-size: 20px 20px; animation: grid-move 20s linear infinite;"></div>
+              
+              <!-- Corner Accents -->
+              <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-st-red rounded-tl-2xl opacity-60"></div>
+              <div class="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-st-red rounded-tr-2xl opacity-60"></div>
+              <div class="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-st-red rounded-bl-2xl opacity-60"></div>
+              <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-st-red rounded-br-2xl opacity-60"></div>
+              
+              <!-- Scan Line Effect -->
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent via-st-red/10 to-transparent opacity-0 group-hover/timer:opacity-100 transition-opacity duration-500 pointer-events-none" style="animation: scan-line 3s linear infinite;"></div>
+              
+              <!-- Countdown Display -->
+              <div id="premium-countdown" class="st-countdown-container relative z-10"></div>
+              
+              <!-- Bottom Status Bar -->
+              <div class="relative z-10 mt-8 pt-6 border-t border-st-red/30 flex items-center justify-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-st-red animate-pulse"></div>
+                <span class="text-xs uppercase tracking-[0.3em] text-st-red/80 font-bold">LIVE COUNTDOWN // MARCH 6, 2026</span>
+                <div class="w-2 h-2 rounded-full bg-st-red animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   `;
 }
@@ -268,3 +340,7 @@ export function initHome() {
     // 7. Initialize Scroll Animations (Optional - Already handled by Tailwind classes mostly)
     console.log('Home initialized with Spline Robot');
 }
+
+
+
+
